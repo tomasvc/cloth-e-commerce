@@ -1,0 +1,31 @@
+.cart {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5rem;
+}
+
+.cart__title {
+    font-size: 2rem;
+    font-weight: 200;
+}
+
+.cart__shopBtn {
+    padding: 0.7rem 1.2rem;
+    margin: 0.5rem 0;
+    background: #000;
+    color: #fff;
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+    border: none;
+    position: relative;
+    border: 1px solid #000;
+    transition: 0.3s ease;
+}
+
+.cart__shopBtn:hover {
+    cursor: pointer;
+    color: #000;
+    background-color: transparent;
+}

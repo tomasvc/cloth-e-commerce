@@ -1,0 +1,56 @@
+.footer {
+    font-size: 0.8rem;
+    overflow-x: hidden;
+}
+
+.footer__top {
+    padding: 0.5rem 5rem 1rem 5rem;
+    margin: auto;
+    display: flex;
+    background-color: #eeeeee;
+}
+
+.top__column {
+    margin-right: 10rem;
+}
+
+.top__column > h4 {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #555;
+    font-size: 0.85rem;
+}
+
+.top__column > p {
+    color: #444;
+}
+
+.top__column > p:hover {
+    cursor: pointer;
+}
+
+.footer__bottom {
+    padding: 0 5rem;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    background-color: #dddddd;
+    color: #444;
+}
+
+.footer__bottom > div {
+    display: flex;
+}
+
+.footer__bottom > div > p {
+    padding: 0 1rem;
+}
+
+.footer__bottom > div > p:hover {
+    cursor: pointer;
+}
+
+.footer__bottom > div > p:not(:last-child) {
+    border-right: 1px solid #444;
+
+}
