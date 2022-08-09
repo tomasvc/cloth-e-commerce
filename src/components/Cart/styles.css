@@ -3,7 +3,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 5rem;
+    height: 40vh;
+    margin: 5rem 0;
 }
 
 .cart__title {

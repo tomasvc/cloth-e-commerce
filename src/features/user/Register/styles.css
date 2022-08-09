@@ -1,11 +1,11 @@
-.login {
+.register {
     display: flex;
     justify-content: space-between;
     width: 100vw;
     height: calc(100vh - 56px);
 }
 
-.login__left {
+.register__left {
     display: flex;
     flex-basis: 50%;
     width: 100%;
@@ -14,7 +14,7 @@
     align-items: center;
 }
 
-.login__right {
+.register__right {
     flex-basis: 50%;
     overflow: hidden;
 }
@@ -23,12 +23,12 @@
     transform: translateY(-200);
 }
 
-.login__title {
+.register__title {
     font-size: 2rem;
     font-weight: 200;
 }
 
-.login__form {
+.register__form {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -69,7 +69,7 @@
     background-color: transparent;
 }
 
-.login__registerLink {
+.register__registerLink {
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial;
     font-size: 0.9rem;
 }

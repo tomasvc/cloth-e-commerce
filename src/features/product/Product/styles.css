@@ -1,4 +1,4 @@
-.product--parent {
+.product__parent {
     display: flex;
     flex-direction: column;
 }

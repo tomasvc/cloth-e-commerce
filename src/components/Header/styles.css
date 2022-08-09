@@ -1,9 +1,11 @@
 .header {
   width: 100vw;
-  height: 3.5rem;
+  max-height: 4rem;
   display: flex;
   justify-content: space-between;
   position: relative;
+  margin-bottom: -1rem;
+  background: rgb(21, 20, 20);
 }
 .header__navbar {
   display: flex;
@@ -26,11 +28,13 @@
 .input {
   background-color: #fafafa;
   border: 1px solid lightgrey;
+  border-radius: 50px;
   outline: none;
   padding: 0.5rem;
   width: 100%;
   font-size: 0.8rem;
   padding: 0.6rem 0.7rem 0.5rem 0.7rem;
+  position: relative;
 }
 .input:focus {
   background-color: #fff;
@@ -38,6 +42,28 @@
 }
 .input::placeholder {
   color: #999;
+}
+#results {
+  background: #fafafa;
+  padding: 1rem;
+  position: absolute;
+  top: 3rem;
+  width: 500px;
+  z-index: 10;
+}
+#results ul {
+  flex-direction: column;
+  padding-left: 0;
+  margin: 0;
+}
+#results ul li {
+  list-style-type: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  color: #000;
+}
+#results ul li:hover {
+  background: #ececec;
 }
 .navbar__right {
   align-items: center;
@@ -47,6 +73,7 @@
 .right__user {
   align-items: center;
   position: relative;
+  color: #fff;
 }
 .navbar__right > button {
   background-color: transparent;
@@ -91,7 +118,7 @@
 .navbar__icon > span {
   width: 30px;
   height: 0.5px;
-  background: #000;
+  background: #fff;
 }
 .navbar__icon:active > span {
   animation: icon--1__rotate;
@@ -139,4 +166,5 @@
   font-size: 1.4rem;
   letter-spacing: 2px;
   text-transform: uppercase;
+  color: #fff;
 }

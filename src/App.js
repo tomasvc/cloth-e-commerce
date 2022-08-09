@@ -6,11 +6,11 @@ import Home from './components/Home'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Cart from './components/Cart'
-import Login from './components/Login'
-import Register from './components/Login'
-import ProductList from './components/ProductList'
-import Product from './components/Product'
-import Profile from './components/Profile'
+import Login from './features/user/Login'
+import Register from './features/user/Register'
+import ProductList from './features/product/ProductList'
+import Product from './features/product/Product'
+import Profile from './components/Profile/Profile'
 
 
 function App() {

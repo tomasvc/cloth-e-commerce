@@ -1,5 +1,5 @@
 import React from 'react'
-import './Footer.css'
+import './styles.css'
 
 export default function Footer() {
     return (
@@ -31,7 +31,7 @@ export default function Footer() {
                 </div>
             </div>
             <div className="footer__bottom">
-                <p>&copy; 2021 Cloth — created by tomasvc</p>
+                <p>&copy; 2022 Cloth — created by tomasvc</p>
                 <div>
                     <p>Privacy Policy</p>
                     <p>T&C</p>
