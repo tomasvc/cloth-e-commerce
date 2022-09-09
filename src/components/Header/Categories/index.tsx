@@ -36,7 +36,7 @@ export default function Categories() {
         <div className="categories">
             <ul>
                 {
-                    categories?.categories?.map((item: any) => {
+                    categories && categories?.categories?.map((item: any) => {
                         return <li onClick={() => handleSelect(item.id, item.name)} key={item.id}>{item.name}</li>
                     })
                 }
