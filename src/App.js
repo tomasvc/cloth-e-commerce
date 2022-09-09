@@ -2,15 +2,15 @@ import './App.css';
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-import Home from './components/Home'
-import Header from './components/Header'
-import Footer from './components/Footer'
-import Cart from './components/Cart'
-import Login from './features/user/Login'
-import Register from './features/user/Register'
-import ProductList from './features/product/ProductList'
-import Product from './features/product/Product'
-import Profile from './components/Profile/Profile'
+import Home from 'pages/Home'
+import Header from 'components/Header'
+import Footer from 'components/Footer'
+import Cart from 'pages/Cart'
+import Login from 'pages/Login'
+import Register from 'pages/Register'
+import ProductList from 'pages/ProductList'
+import Product from 'pages/ProductItem'
+import Profile from 'pages/Profile'
 
 
 function App() {
