@@ -42,7 +42,14 @@ const initialState: SliceState = {
 export const searchSlice = createSlice({
   name: "search",
   initialState,
-  reducers: {},
+  reducers: {
+    updateResults(state, action) {
+      state.results = action.payload
+    },
+    clearResults(state) {
+      state.results = []
+    }
+  },
   extraReducers: (builder) => {
     return (
       builder.addCase(fetchResults.pending, (state) => {
@@ -63,5 +70,5 @@ export const searchSlice = createSlice({
   },
 });
 
-// export const { fetch } = searchSlice.actions;
+export const { updateResults, clearResults } = searchSlice.actions;
 export default searchSlice.reducer;

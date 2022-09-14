@@ -1,6 +1,7 @@
 // import firebase from 'firebase'
 
 // Import the functions you need from the SDKs you need
+import { Query } from "@testing-library/react";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider, User, signOut } from "firebase/auth";
 import {
@@ -9,6 +10,7 @@ import {
   getDoc,
   getDocs,
   setDoc,
+  updateDoc,
   query,
   QueryDocumentSnapshot
 } from "firebase/firestore";
@@ -50,6 +52,7 @@ type UserData = {
   displayName: string;
   email: string;
   createdAt: Date;
+  cart: Array<any>;
 }
 
 const createUserDocumentFromAuth = async (userAuth: User): Promise<void | QueryDocumentSnapshot<UserData>> => {
@@ -90,6 +93,25 @@ const getCategories = async (): Promise<
   }
 };
 
+const getUserCartFromFirestore = async (userAuth: User): Promise<void | Array<any>> => {
+  const userDocRef = doc(db, "users", userAuth.uid);
+
+  const docSnap = await getDoc(userDocRef)
+
+  console.log(docSnap.data())
+
+  return docSnap?.data()?.cart as Array<any>
+
+}
+
+const updateUserCart = async (userAuth: User, items: any) => {
+  const userDocRef = doc(db, "users", userAuth.uid);
+
+  await updateDoc(userDocRef, {
+    cart: items
+  })
+}
+
 export {
   app,
   auth,
@@ -97,4 +119,6 @@ export {
   createUserDocumentFromAuth,
   signOutUser,
   getCategories,
+  updateUserCart,
+  getUserCartFromFirestore
 };

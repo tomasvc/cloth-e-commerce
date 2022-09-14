@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { updateUserCart } from "utils/firebase";
+import { getAuth } from "firebase/auth";
 
 type CartItem = {
   id: string;
@@ -38,10 +40,18 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
+    updateCartFromFirestore(state, action) {
+      state.cartItems = action.payload
+    },
+    clearCart(state) {
+      state.cartItems = []
+    },
     addItemToCart(state, action) {
       const itemExists = state.cartItems.find(
         (item) => item.id === action.payload.id
       );
+
+      const auth = getAuth();
 
       state.cartItems = itemExists
         ? state.cartItems.map((item) =>
@@ -50,11 +60,15 @@ export const cartSlice = createSlice({
               : item
           )
         : [...state.cartItems, { ...action.payload, quantity: 1 }];
+
+      auth.currentUser && updateUserCart(auth.currentUser, state.cartItems);
     },
     removeItemFromCart(state, action) {
       const itemExists = state.cartItems.find(
         (item) => item.id === action.payload.id
       );
+
+      const auth = getAuth();
 
       itemExists?.quantity === 1
         ? (state.cartItems = state.cartItems.filter(
@@ -65,6 +79,8 @@ export const cartSlice = createSlice({
               ? { ...item, quantity: item.quantity - 1 }
               : item
           ));
+
+      auth.currentUser && updateUserCart(auth.currentUser, state.cartItems);
     },
     clearItemFromCart(state, action) {
       state.cartItems = state.cartItems.filter(
@@ -84,6 +100,8 @@ export const cartSlice = createSlice({
 });
 
 export const {
+  updateCartFromFirestore,
+  clearCart,
   addItemToCart,
   removeItemFromCart,
   clearItemFromCart,

@@ -1,9 +1,10 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from 'react-router-dom';
-import { RootState } from "../../store";
+import { RootState } from "store";
 import { signOutUser } from 'utils/firebase'
 import { userLogout } from 'slices/userSlice'
+import { clearCart } from 'slices/cartSlice'
 
 export default function Profile() {
   const user = useSelector((state: RootState) => state.user);
@@ -15,6 +16,7 @@ export default function Profile() {
   const handleSignOut = () => {
     signOutUser();
     dispatch(userLogout())
+    dispatch(clearCart())
     history.push('/login')
   }
 

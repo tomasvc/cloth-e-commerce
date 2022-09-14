@@ -30,34 +30,41 @@ export default function ProductList() {
   return (
     <div className="product-list">
       {products?.loading ? (
-        <CircularProgress
-          sx={{ margin: "10rem auto", position: "relative" }}
-        />
+        <CircularProgress sx={{ margin: "10rem auto", position: "relative" }} />
       ) : (
         <>
-          <h1 style={{ margin: '2rem auto', fontWeight: 300 }}>{products?.categoryName}</h1>
-          <ul className="product-list__list">
-            {products?.products?.map((product: any) => {
-              return (
-                <ListItem
-                  key={product.id}
-                  id={product.id}
-                  name={product.name}
-                  price={product.price.current.text}
-                  image={product.imageUrl}
-                />
-              );
-            })}
-          </ul>
+          <h1 style={{ margin: "2rem auto", fontWeight: 300 }}>
+            {products?.categoryName}
+          </h1>
+
+          {products?.products?.length ? (
+            <ul className="product-list__list">
+              {products?.products?.map((product: any) => {
+                return (
+                  <ListItem
+                    key={product.id}
+                    id={product.id}
+                    name={product.name}
+                    price={product.price.current.text}
+                    image={product.imageUrl}
+                  />
+                );
+              })}
+            </ul>
+          ) : (
+            <p className="product-list__not-found">No items found</p>
+          )}
         </>
       )}
 
-      <Pagination
-        sx={{ margin: "auto", mb: 4 }}
-        // page={currentPage}
-        count={10}
-        onChange={(event, page) => handlePageChange(page)}
-      />
+      {products?.products?.length && (
+        <Pagination
+          sx={{ margin: "auto", mb: 4 }}
+          // page={currentPage}
+          count={10}
+          onChange={(event, page) => handlePageChange(page)}
+        />
+      )}
     </div>
   );
 }

@@ -38,6 +38,11 @@ a {
   margin: 1rem auto;
 }
 
+.product-list__not-found {
+  font-size: 2rem;
+  margin: auto;
+}
+
 .MuiPagination-ul li {
   padding: 0.5rem;
 }
