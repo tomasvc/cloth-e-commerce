@@ -4,7 +4,7 @@ import { Pagination, CircularProgress } from "@mui/material";
 import { fetchProductsByCategoryId } from "../../slices/productSlice";
 import { RootState } from "../../store";
 import ListItem from "../../components/ProductListItem";
-import "./styles.css";
+import { List } from "./styles";
 
 export default function ProductList() {
   const products = useSelector((state: RootState) => state.products);
@@ -28,7 +28,7 @@ export default function ProductList() {
   };
 
   return (
-    <div className="product-list">
+    <List className="product-list">
       {products?.loading ? (
         <CircularProgress sx={{ margin: "10rem auto", position: "relative" }} />
       ) : (
@@ -65,6 +65,6 @@ export default function ProductList() {
           onChange={(event, page) => handlePageChange(page)}
         />
       )}
-    </div>
+    </List>
   );
 }

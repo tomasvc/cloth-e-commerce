@@ -8,7 +8,7 @@ import { RootState } from "../../store";
 import Categories from "./Categories";
 import Search from "./Search";
 
-import "./styles.css";
+import { StyledHeader } from "./styles";
 
 export default function Header() {
   const history = useHistory();
@@ -17,7 +17,7 @@ export default function Header() {
 
   return (
     <>
-      <div className="header">
+      <StyledHeader className="header">
         <nav
           className="header__navbar"
           role="navigation"
@@ -72,7 +72,7 @@ export default function Header() {
             </button>
           </div>
         </nav>
-      </div>
+      </StyledHeader>
       <Categories />
     </>
   );

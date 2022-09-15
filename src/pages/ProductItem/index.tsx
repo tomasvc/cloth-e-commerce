@@ -17,7 +17,7 @@ import { RootState } from "../../store";
 //   addItemToFavorites,
 //   removeItemFromFavorites,
 // } from "../../slices/cartSlice";
-import "./styles.css";
+import { Item } from "./styles";
 
 type IdParams = {
   productId: string;
@@ -60,7 +60,7 @@ export default function Product() {
   };
 
   return (
-    <div className="product__parent">
+    <Item className="product__parent">
       <Snackbar
         open={cartSnackbar}
         autoHideDuration={6000}
@@ -143,6 +143,6 @@ export default function Product() {
           </div>
         </div>
       )}
-    </div>
+    </Item>
   );
 }

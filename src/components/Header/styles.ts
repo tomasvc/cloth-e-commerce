@@ -1,4 +1,7 @@
-.header {
+import styled from "styled-components"
+
+export const StyledHeader = styled.div`
+
   width: 100vw;
   max-height: 4rem;
   display: flex;
@@ -6,13 +9,17 @@
   position: relative;
   margin-bottom: -1rem;
   background: rgb(21, 20, 20);
-}
+
 .header__navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 5rem;
   width: 100%;
+
+  @media screen and (max-width: 1024px) {
+    padding: 0;
+  }
 }
 .navbar__left {
   display: flex;
@@ -168,3 +175,6 @@
   text-transform: uppercase;
   color: #fff;
 }
+
+
+`
