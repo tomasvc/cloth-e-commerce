@@ -11,7 +11,7 @@ export const Menu = styled.div<MenuProps>`
     position: absolute;
     top: -15px;
     z-index: 10;
-    background: ${props => props.visibility === 'visible' ? '#00000050' : 'transparent'};
+    background: ${props => props.visibility === 'visible' ? '#00000099' : 'transparent'};
     transition: 0.3s ease;
 
     .categories__ul {
@@ -32,6 +32,7 @@ export const Menu = styled.div<MenuProps>`
             padding: 2rem;
             color: #fff;
             cursor: pointer;
+            transition: 0.3s all;
 
             &:hover {
                 background: #666;
@@ -48,6 +49,7 @@ export const Menu = styled.div<MenuProps>`
         height: 50px;
         margin-left: 0.2rem;
         transition: 0.3s ease;
+        cursor: pointer;
     }
 
 `

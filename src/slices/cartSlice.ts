@@ -41,25 +41,27 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     updateCartFromFirestore(state, action) {
-      state.cartItems = action.payload
+      state.cartItems = action.payload;
     },
     clearCart(state) {
-      state.cartItems = []
+      state.cartItems = [];
     },
     addItemToCart(state, action) {
-      const itemExists = state.cartItems.find(
+      const itemExists = state.cartItems?.find(
         (item) => item.id === action.payload.id
       );
 
       const auth = getAuth();
 
       state.cartItems = itemExists
-        ? state.cartItems.map((item) =>
+        ? state?.cartItems?.map((item) =>
             item.id === action.payload.id
               ? { ...item, quantity: item.quantity + 1 }
               : item
           )
-        : [...state.cartItems, { ...action.payload, quantity: 1 }];
+        : state?.cartItems?.length
+        ? [...state.cartItems, { ...action.payload, quantity: 1 }]
+        : [{ ...action.payload, quantity: 1 }];
 
       auth.currentUser && updateUserCart(auth.currentUser, state.cartItems);
     },

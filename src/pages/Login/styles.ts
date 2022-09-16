@@ -1,12 +1,15 @@
 import styled from "styled-components";
 
 export const StyledLogin = styled.div`
-  .login {
     display: flex;
     justify-content: space-between;
     width: 100vw;
     height: calc(100vh - 56px);
-  }
+
+    @media screen and (max-width: 870px) {
+        flex-direction: column-reverse;
+        margin-bottom: 2rem;
+    }
 
   .login__left {
     display: flex;
@@ -24,6 +27,8 @@ export const StyledLogin = styled.div`
 
   .right__image {
     transform: translateY(-200);
+    object-fit: contain;
+    width: 100%;
   }
 
   .login__title {
@@ -80,6 +85,7 @@ export const StyledLogin = styled.div`
   .login__googleBtn {
     margin-top: 1rem;
     padding: 0.7rem;
+    min-width: 200px;
     max-width: 30%;
     width: 100%;
     background: rgb(234, 234, 234);

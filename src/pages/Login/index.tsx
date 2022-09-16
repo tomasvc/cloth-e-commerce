@@ -10,7 +10,7 @@ import {
   getUserCartFromFirestore,
 } from "../../utils/firebase";
 import { RootState } from "../../store";
-import "./styles.ts";
+import { StyledLogin } from "./styles";
 import image from "../../assets/images/pexels-ike-louie-natividad-3310694.jpg";
 
 export default function Login() {
@@ -58,7 +58,7 @@ export default function Login() {
   };
 
   return (
-    <div className="login">
+    <StyledLogin className="login">
       <div className="login__left">
         <h3 className="login__title">Login</h3>
         {error && error}
@@ -106,6 +106,6 @@ export default function Login() {
       <div className="login__right">
         <img className="right__image" src={image} alt="" />
       </div>
-    </div>
+    </StyledLogin>
   );
 }

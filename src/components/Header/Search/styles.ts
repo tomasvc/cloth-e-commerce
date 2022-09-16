@@ -5,11 +5,15 @@ export const Searchbar = styled.div`
     display: none;
   }
 
+  margin-left: 1rem;
+  min-width: 500px;
+
   .left__input {
     min-width: 500px;
     width: 100%;
     margin-left: 1rem;
   }
+
   .input {
     background-color: #fafafa;
     border: 1px solid lightgrey;

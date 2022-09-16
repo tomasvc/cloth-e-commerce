@@ -24,9 +24,9 @@ export default function Cart() {
   const user = useSelector((state: RootState) => state.user);
   const cart = useSelector((state: RootState) => state.cart);
 
-  // const totalPrice = cart.cartItems.reduce(
-  //   (total: any, cartItem: any) => total + (cartItem.quantity * cartItem.price)
-  // );
+  const totalPrice = cart?.cartItems?.reduce(
+    (total: number, cartItem: CartItemProps) => total + (cartItem?.price * cartItem?.quantity), 0
+  );
 
   useEffect(() => {
     console.log(user);
@@ -49,7 +49,7 @@ export default function Cart() {
               <h2 className="summary__label">Summary</h2>
               <div className="summary__total">
                 <p>Total (excluding delivery):</p>
-                <p className="total__price">$70.00</p>
+                <p className="total__price">${totalPrice.toFixed(2)}</p>
               </div>
 
               <div className="summary__buttons">

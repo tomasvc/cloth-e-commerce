@@ -1,9 +1,16 @@
-.register {
+import styled from "styled-components"
+
+export const StyledRegister = styled.div`
+
     display: flex;
     justify-content: space-between;
     width: 100vw;
     height: calc(100vh - 56px);
-}
+
+    @media screen and (max-width: 870px) {
+        flex-direction: column-reverse;
+        margin-bottom: 2rem;
+    }
 
 .register__left {
     display: flex;
@@ -21,6 +28,8 @@
 
 .right__image {
     transform: translateY(-200);
+    object-fit: contain;
+    width: 100%;
 }
 
 .register__title {
@@ -73,3 +82,6 @@
     font-family: Montserrat,"Helvetica Neue",Helvetica,Arial;
     font-size: 0.9rem;
 }
+
+`
+

@@ -2,7 +2,7 @@ import React, { useState, SyntheticEvent } from 'react'
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth'
 import { createUserDocumentFromAuth } from '../../utils/firebase' 
 
-import './styles.css'
+import { StyledRegister } from './styles'
 
 import image from '../../assets/images/pexels-ike-louie-natividad-3310694.jpg'
 
@@ -11,6 +11,7 @@ export default function Register() {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [error, setError] = useState('')
 
     const [userRegistered, setUserRegistered] = useState(false)
 
@@ -19,8 +20,6 @@ export default function Register() {
         const handleSubmit = (e: SyntheticEvent<HTMLElement>) => {
             e.preventDefault()
             createUserWithEmailAndPassword(auth, email, password).then(userCredential => {
-                const user = userCredential.user
-                console.log(user)
                 console.log(auth.currentUser)
             }).then(() => {
                 auth.currentUser &&
@@ -28,15 +27,15 @@ export default function Register() {
                     setUserRegistered(true)
             })
             .catch(error => {
-                const errorCode = error.code
-                const errorMessage = error.message
+                setError(error.errorMessage)
             })
         }
 
     return (
-        <div className="register">
+        <StyledRegister className="register">
             <div className="register__left">
                 <h3 className="register__title">Register</h3>
+                {error && <p>{error}</p>}
                 {userRegistered ? (
                     <p className="register__verification">A verification link has been sent to <b>{email}</b></p>
                 ) : (
@@ -61,6 +60,6 @@ export default function Register() {
             <div className="register__right">
                 <img className="right__image" src={image} alt="" />
             </div>
-        </div>
+        </StyledRegister>
     )
 }
