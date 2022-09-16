@@ -1,11 +1,15 @@
-.list__item {
+import styled from "styled-components"
+
+export const Item = styled.div`
+
+
     list-style-type: none;
     text-align: center;
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
-}
+
 
 .item__top {
     display: flex;
@@ -19,6 +23,12 @@
     flex-direction: column;
     justify-content: space-between;
     margin-bottom: 1.5rem;
+
+    @media screen and (max-width: 1024px) {
+        max-width: 70%;
+        margin: auto;
+        margin-bottom: 2rem;
+    }
 }
 
 .top__image {
@@ -43,3 +53,6 @@
     margin: 0;
     margin-bottom: 0.5rem;
 }
+
+`
+

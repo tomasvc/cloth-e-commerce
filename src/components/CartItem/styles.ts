@@ -9,6 +9,11 @@ export const Item = styled.div`
   border: 1px solid rgb(216, 216, 216);
   padding: 2rem;
 
+  @media screen and (max-width: 1024px) {
+    margin: 1rem;
+    width: auto;
+  }
+
   .item__info {
     margin-left: 2rem;
     width: 100%;

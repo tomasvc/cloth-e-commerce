@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Item = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 15px;
 
   a {
     color: #000;
@@ -20,7 +21,8 @@ export const Item = styled.div`
       margin: 2rem auto;
 
       @media screen and (max-width: 520px) {
-        margin: 2rem;
+        margin: 0;
+        padding: 2rem;
         width: 100%;
       }
     }
@@ -44,17 +46,18 @@ export const Item = styled.div`
       max-height: 100px;
       height: 100%;
       flex-direction: row;
-      justify-content: space-between;
+      justify-content: center;
     }
   }
 
   .left__imageList > img {
     margin-bottom: 0.5rem;
+    object-fit: cover;
 
     @media screen and (max-width: 768px) {
       margin: 0.2rem;
-      width: 100%;
-      height: wuto;
+      width: 23.5%;
+      height: auto;
     }
   }
 
@@ -106,6 +109,7 @@ export const Item = styled.div`
   }
 
   .right__description ul li {
+    list-style-type: none;
     background: transparent;
     color: #000;
     padding: 0;

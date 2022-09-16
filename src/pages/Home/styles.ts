@@ -6,6 +6,7 @@ export const Homepage = styled.div`
   display: flex;
   justify-content: space-between;
   position: relative;
+  top: 15px;
 
   @media screen and (max-width: 1024px) {
     display: block;

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
 import CartItem from "components/CartItem";
-import "./styles.css";
+import { StyledCart } from "./styles";
 
 import visa from "assets/images/visa.svg";
 import mastercard from "assets/images/mastercard.svg";
@@ -34,7 +34,7 @@ export default function Cart() {
   }, [user, cart]);
 
   return (
-    <div className="cart">
+    <StyledCart className="cart">
       <h1 className="cart__label">Cart</h1>
       <div className="cart__wrapper">
         {cart?.cartItems?.length ? (
@@ -62,7 +62,6 @@ export default function Cart() {
                 <a
                   href="/products"
                   className="buttons__continueBtn"
-                  // onClick={() => (document.location.href = "/products")}
                 >
                   Continue shopping
                 </a>
@@ -80,6 +79,6 @@ export default function Cart() {
           <h3 className="cart__title">Your cart is empty</h3>
         )}
       </div>
-    </div>
+    </StyledCart>
   );
 }

@@ -10,7 +10,7 @@ import {
   getUserCartFromFirestore,
 } from "../../utils/firebase";
 import { RootState } from "../../store";
-import "./styles.css";
+import "./styles.ts";
 import image from "../../assets/images/pexels-ike-louie-natividad-3310694.jpg";
 
 export default function Login() {

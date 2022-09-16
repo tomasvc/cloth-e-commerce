@@ -4,16 +4,16 @@ import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../../../store'
 import { fetchCategories } from '../../../slices/categorySlice'
 import { fetchProductsByCategoryId, updateCategoryId, updateCategoryName } from '../../../slices/productSlice'
+import { MdClose } from 'react-icons/md'
 
 import { Menu } from './styles'
 
-export default function Categories() {
+export const CategoriesMenu: React.FC<{open: boolean; setOpen: (open: boolean) => void}> = ({ open, setOpen }) => {
 
     const history = useHistory()
 
     const dispatch = useDispatch()
     const categories = useSelector((state: RootState) => {
-        console.log(state.categories)
         return state.categories
     })
 
@@ -21,26 +21,24 @@ export default function Categories() {
         dispatch(fetchCategories())
     }, [dispatch])
 
-    useEffect(() => {
-        console.log(categories)
-    }, [categories])
-
     const handleSelect = (id: string, name: string) => {
         dispatch(fetchProductsByCategoryId({page: 1, category: id}))
         dispatch(updateCategoryId(id))
         dispatch(updateCategoryName(name))
+        setOpen(false);
         history.push('/products')
     }
 
     return (
-        <Menu className="categories">
-            <ul>
+        <Menu className="categories" visibility={ open ? 'visible' : 'hidden'}>
+            <ul className="categories__ul">
                 {
                     categories && categories.categories && categories.categories.length && categories?.categories?.map((item: any) => {
-                        return <li onClick={() => handleSelect(item.id, item.name)} key={item.id}>{item.name}</li>
+                        return <li className="ul__category" onClick={() => handleSelect(item.id, item.name)} key={item.id}>{item.name}</li>
                     })
                 }
             </ul>
+            <MdClose className="categories__closeBtn" onClick={() => setOpen(false)} />
         </Menu>
     )
 }

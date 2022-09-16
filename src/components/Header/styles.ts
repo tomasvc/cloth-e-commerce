@@ -27,60 +27,33 @@ export const StyledHeader = styled.div`
   height: inherit;
   padding: 0 2rem;
 }
-.left__input {
-  min-width: 500px;
-  width: 100%;
-  margin-left: 1rem;
-}
-.input {
-  background-color: #fafafa;
-  border: 1px solid lightgrey;
-  border-radius: 50px;
-  outline: none;
-  padding: 0.5rem;
-  width: 100%;
-  font-size: 0.8rem;
-  padding: 0.6rem 0.7rem 0.5rem 0.7rem;
-  position: relative;
-}
-.input:focus {
-  background-color: #fff;
-  border: 1px solid #999;
-}
-.input::placeholder {
-  color: #999;
-}
-#results {
-  background: #fafafa;
-  padding: 1rem;
-  position: absolute;
-  top: 3rem;
-  width: 500px;
-  z-index: 10;
-}
-#results ul {
-  flex-direction: column;
-  padding-left: 0;
-  margin: 0;
-}
-#results ul li {
-  list-style-type: none;
+.left__bars {
+  display: none;
+  color: #fff;
+  width: 25px;
+  height: 25px;
+  margin-top: 0.2rem;
+  margin-right: 1rem;
   cursor: pointer;
-  padding: 0.5rem;
-  color: #000;
-}
-#results ul li:hover {
-  background: #ececec;
+
+  @media screen and (max-width: 1750px) {
+    display: block;
+  }
 }
 .navbar__right {
   align-items: center;
   position: relative;
+  display: flex;
 }
 .right__cart,
 .right__user {
   align-items: center;
   position: relative;
   color: #fff;
+}
+.right__user {
+  display: flex;
+  flex-direction: row;
 }
 .navbar__right > button {
   background-color: transparent;
@@ -90,18 +63,14 @@ export const StyledHeader = styled.div`
 }
 .cart__cart,
 .user__user {
-  display: none;
-  position: absolute;
-  min-width: 300px;
   left: -180px;
   top: 40px;
-  background-color: #fff;
-  box-shadow: 5px 20px 30px rgba(34, 34, 34, 0.247);
-  padding: 3rem;
-  transition: 0.3s ease-in-out;
+  transition: 0.3s ease;
 }
-.user__user {
-  left: -245px;
+.user__login {
+  color: #fff;
+  font-size: 0.9rem;  
+  margin-right: 1rem;
 }
 .navbar__right > button:hover {
   cursor: pointer;

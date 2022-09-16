@@ -1,9 +1,16 @@
 import React from 'react'
-import './styles.css'
+import { Item } from './styles'
 
-export default function ListItem(props: any) {
+type ItemProps = {
+    id: number;
+    image: string;
+    name: string;
+    price: number;
+}
+
+export default function ListItem(props: ItemProps) {
     return (
-        <div className="list__item">
+        <Item className="list__item">
             <div className="item__top">
                 <a href={'/product/' + props.id}><img className="top__image" src={'https://' + props.image} alt={props.name} /></a>
             </div>
@@ -13,6 +20,6 @@ export default function ListItem(props: any) {
                     <p className="bottom__price">{props.price}</p>
                 </div>
             </div>
-        </div>
+        </Item>
     )
 }

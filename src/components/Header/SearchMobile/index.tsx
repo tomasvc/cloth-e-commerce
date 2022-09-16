@@ -8,7 +8,7 @@ import axios from "axios";
 
 const API_KEY = "78a110ed1dmshbcfebcdca14633ap13f5ffjsn7c75c6dcf1c0";
 
-export default function SearchMobile() {
+export default function Search() {
   const [query, setQuery] = useState("");
   const results = useSelector((state: RootState) => state.search);
   const dispatch = useDispatch();
@@ -39,11 +39,24 @@ export default function SearchMobile() {
     setQuery(event.target.value);
   };
 
+  //   const showResults = (val: any) => {
+  //     let res = document.getElementById("results");
+  //     if (res) {
+  //       res.innerHTML = "";
+  //       let list = "";
+  //       for (let i = 0; i < val?.length; i++) {
+  //         list += "<li>" + val[i]?.name + "</li>";
+  //       }
+  //       res.innerHTML = "<ul>" + list + "</ul>";
+  //     }
+  //   };
+
   const getResults = (options: any) => {
     query !== ""
       ? axios
           .request(options)
           .then((response) => {
+            console.log(response.data);
             dispatch(updateResults(response.data.products));
           })
           .catch((error) => {
