@@ -47,7 +47,7 @@ export const Header: React.FC = () => {
             >
               <div id="user" className="user__user">
                 <Link to="/login" className="user__login">
-                  {user?.user ? "Hello" : "Sign in"}
+                  {user?.user ? `Hello ${user?.user?.displayName}` : "Sign in"}
                 </Link>
               </div>
               <AiOutlineUser />

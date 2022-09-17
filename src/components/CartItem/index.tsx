@@ -17,10 +17,6 @@ export const CartItem: React.FC<CartItemProps> = (cartItem) => {
   const { name, gender, color, images, price, quantity } = cartItem;
   const dispatch = useDispatch();
 
-  console.log(price)
-
-  // const priceAsNumber: number = +parseInt(price.slice(1))
-
   return (
     <Item className="cart__item">
       <div className="item__image">

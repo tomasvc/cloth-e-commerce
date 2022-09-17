@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { RootState } from "store";
 import { CartItem } from "components/CartItem";
 import { StyledCart } from "./styles";
+import { Button } from "components/Button";
 
 import visa from "assets/images/visa.svg";
 import mastercard from "assets/images/mastercard.svg";
@@ -24,16 +26,13 @@ export const Cart: React.FC = () => {
   const user = useSelector((state: RootState) => state.user);
   const cart = useSelector((state: RootState) => state.cart);
 
+  const history = useHistory();
+
   const totalPrice = cart?.cartItems?.reduce(
     (total: number, cartItem: CartItemProps) =>
       total + cartItem?.price * cartItem?.quantity,
     0
   );
-
-  useEffect(() => {
-    console.log(user);
-    console.log(cart);
-  }, [user, cart]);
 
   return (
     <StyledCart className="cart">
@@ -55,12 +54,10 @@ export const Cart: React.FC = () => {
               </div>
 
               <div className="summary__buttons">
-                <button
-                  className="buttons__shopBtn"
-                  onClick={() => (document.location.href = "/checkout")}
-                >
-                  Continue to checkout
-                </button>
+                <Button
+                  title="Continue to checkout"
+                  onClick={() => history.push("/checkout")}
+                />
                 <a href="/products" className="buttons__continueBtn">
                   Continue shopping
                 </a>

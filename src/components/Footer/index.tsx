@@ -1,9 +1,9 @@
 import React from 'react'
-import './styles.css'
+import { StyledFooter } from './styles'
 
 export const Footer: React.FC = () => {
     return (
-        <footer className="footer">
+        <StyledFooter className="footer">
             <div className="footer__top">
                 <div className="top__column">
                     <h4>Help & Information</h4>
@@ -38,6 +38,6 @@ export const Footer: React.FC = () => {
                     <p>Accessibility</p>
                 </div>
             </div>
-        </footer>
+        </StyledFooter>
     )
 }

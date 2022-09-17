@@ -1,6 +1,13 @@
 import React, { useState, SyntheticEvent } from "react";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  updateProfile,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { createUserDocumentFromAuth } from "utils/firebase";
+import { userLogin } from "slices/userSlice"
 
 import { StyledRegister } from "./styles";
 
@@ -12,19 +19,24 @@ export const Register: React.FC = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const [userRegistered, setUserRegistered] = useState(false);
-
   const auth = getAuth();
+  const history = useHistory()
+  const dispatch = useDispatch()
 
   const handleSubmit = (e: SyntheticEvent<HTMLElement>) => {
     e.preventDefault();
     createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log(auth.currentUser);
-      })
       .then(() => {
         auth.currentUser && createUserDocumentFromAuth(auth.currentUser);
-        setUserRegistered(true);
+        auth.currentUser &&
+          updateProfile(auth.currentUser, {
+            displayName: name,
+          }).then(() => {
+            dispatch(userLogin(auth.currentUser))
+            history.push('/')
+          }).catch((error) => {
+            setError(error.message)
+          })
       })
       .catch((error) => {
         setError(error.errorMessage);
@@ -36,11 +48,6 @@ export const Register: React.FC = () => {
       <div className="register__left">
         <h3 className="register__title">Register</h3>
         {error && <p>{error}</p>}
-        {userRegistered ? (
-          <p className="register__verification">
-            A verification link has been sent to <b>{email}</b>
-          </p>
-        ) : (
           <form className="register__form" onSubmit={handleSubmit}>
             <label htmlFor="name" className="form__label">
               Name
@@ -93,7 +100,6 @@ export const Register: React.FC = () => {
               Register
             </button>
           </form>
-        )}
         <p className="login__registerLink">
           Already have an account? <a href="/login">Login.</a>
         </p>

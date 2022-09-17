@@ -26,6 +26,11 @@ export const StyledHeader = styled.div`
   align-items: center;
   height: inherit;
   padding: 0 2rem;
+
+  @media screen and (max-width: 768px) {
+    padding: 0;
+    padding-left: 1rem;
+  }
 }
 .left__bars {
   display: none;
@@ -44,6 +49,10 @@ export const StyledHeader = styled.div`
   align-items: center;
   position: relative;
   display: flex;
+
+  @media screen and (max-width: 768px) {
+    margin-right: 1rem;
+  }
 }
 .right__cart,
 .right__user {
@@ -58,7 +67,7 @@ export const StyledHeader = styled.div`
 .navbar__right > button {
   background-color: transparent;
   border: none;
-  margin: 0 1rem;
+  margin-left: 1rem;
   font-size: 1.2rem;
 }
 .cart__cart,
@@ -71,6 +80,10 @@ export const StyledHeader = styled.div`
   color: #fff;
   font-size: 0.9rem;  
   margin-right: 1rem;
+
+  @media screen and (max-width: 400px) {
+    display: none;
+  }
 }
 .navbar__right > button:hover {
   cursor: pointer;

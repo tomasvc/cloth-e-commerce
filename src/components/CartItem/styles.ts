@@ -12,17 +12,43 @@ export const Item = styled.div`
   @media screen and (max-width: 1024px) {
     margin: 1rem;
     width: auto;
+
+    @media screen and (max-width: 500px) {
+      padding: 1.5rem;
+      margin: 0;
+      margin-top: 1rem;
+    }
+  }
+
+  .item__image {
+    @media screen and (max-width: 370px) {
+      max-width: 100px;
+    }
+
+    img {
+      @media screen and (max-width: 370px) {
+        width: 100%;
+      }
+    }
   }
 
   .item__info {
     margin-left: 2rem;
     width: 100%;
+
+    @media screen and (max-width: 500px) {
+      margin-left: 1.5rem;
+    }
   }
 
   .info__name {
     margin: 0;
     font-size: 1.4rem;
     font-weight: 700;
+
+    @media screen and (max-width: 500px) {
+      font-size: 1rem;
+    }
   }
 
   .info__genderAndColor {
@@ -32,6 +58,7 @@ export const Item = styled.div`
 
   .info__bottom {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
   }
 

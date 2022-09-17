@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { Alert, CircularProgress, Snackbar } from "@mui/material";
+import { Button } from "components/Button";
 import { fetchProductItemById } from "slices/productSlice";
 import { addItemToCart } from "slices/cartSlice";
 import { RootState } from "store";
@@ -132,12 +133,13 @@ export const Product: React.FC = () => {
               }}
             ></div>
             <div className="right__buttons">
-              <button
+              {/* <button
                 className="buttons__addToCart"
                 onClick={() => handleAddToCart(product?.selectedProduct)}
               >
                 Add to cart
-              </button>
+              </button> */}
+              <Button title="Add to cart" onClick={() => handleAddToCart(product?.selectedProduct)} />
               <button
                 className="buttons__favorite"
                 onClick={() => setFillHeart(!fillHeart)}

@@ -20,6 +20,11 @@ export const StyledCart = styled.div`
 
     @media screen and (max-width: 1024px) {
       flex-direction: column-reverse;
+      width: 100%;
+
+      @media screen and (max-width: 500px) {
+        padding: 1rem;
+      }
     }
   }
 
@@ -42,6 +47,11 @@ export const StyledCart = styled.div`
     @media screen and (max-width: 1024px) {
       margin: 1rem;
       margin-bottom: 2rem;
+
+      @media screen and (max-width: 500px) {
+        padding: 1.5rem;
+        margin: 0;
+      }
     }
   }
 

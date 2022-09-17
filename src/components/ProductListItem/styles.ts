@@ -28,6 +28,11 @@ export const Item = styled.div`
         max-width: 70%;
         margin: auto;
         margin-bottom: 2rem;
+
+        @media screen and (max-width: 768px) {
+            margin-top: 0;
+            font-size: 0.8rem;
+        }
     }
 }
 
@@ -52,6 +57,10 @@ export const Item = styled.div`
     font-size: 1.3rem;
     margin: 0;
     margin-bottom: 0.5rem;
+
+    @media screen and (max-width: 768px) {
+        font-size: 1rem;
+    }
 }
 
 `

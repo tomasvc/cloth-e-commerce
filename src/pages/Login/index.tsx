@@ -35,11 +35,8 @@ export const Login: React.FC = () => {
         dispatch(
           userLogin({
             uid: userCredential.user.uid,
-            name: userCredential.user.displayName,
             email: userCredential.user.email,
-            phone: userCredential.user.phoneNumber,
-            emailVerified: userCredential.user.emailVerified,
-            photoURL: userCredential.user.photoURL,
+            phone: userCredential.user.phoneNumber
           })
         );
         const cart = await getUserCartFromFirestore(userCredential.user);

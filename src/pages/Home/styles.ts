@@ -10,7 +10,6 @@ export const Homepage = styled.div`
 
   @media screen and (max-width: 1024px) {
     display: block;
-    height: 100%;
   }
 
   .home__left {
@@ -95,12 +94,13 @@ export const Homepage = styled.div`
     overflow: hidden;
 
     @media screen and (max-width: 1024px) {
-      max-height: 70vh;
+      height: 100%;
     }
   }
 
   .right__image {
     width: 100%;
-    object-fit: fill;
+    height: 100%;
+    object-fit: cover;
   }
 `;
