@@ -44,11 +44,11 @@ export const searchSlice = createSlice({
   initialState,
   reducers: {
     updateResults(state, action) {
-      state.results = action.payload
+      state.results = action.payload;
     },
     clearResults(state) {
-      state.results = []
-    }
+      state.results = [];
+    },
   },
   extraReducers: (builder) => {
     return (

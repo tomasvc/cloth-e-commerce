@@ -22,8 +22,8 @@ export const userSlice = createSlice({
       state.user = action.payload;
     },
     userLogout(state) {
-      state.user = null
-    }
+      state.user = null;
+    },
   },
   extraReducers: {},
 });

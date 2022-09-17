@@ -3,27 +3,32 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { Alert, CircularProgress, Snackbar } from "@mui/material";
-import { fetchProductItemById } from "../../slices/productSlice";
-import {
-  addItemToCart,
-  removeItemFromCart,
-  addItemToFavorites,
-  removeItemFromFavorites,
-} from "../../slices/cartSlice";
-import { RootState } from "../../store";
-// import {
-//   addItemToCart,
-//   removeItemFromCart,
-//   addItemToFavorites,
-//   removeItemFromFavorites,
-// } from "../../slices/cartSlice";
+import { fetchProductItemById } from "slices/productSlice";
+import { addItemToCart } from "slices/cartSlice";
+import { RootState } from "store";
 import { Item } from "./styles";
 
 type IdParams = {
   productId: string;
 };
 
-export default function Product() {
+interface IProduct {
+  id: number;
+  name: string;
+  gender: string;
+  color: string;
+  images: Array<any>;
+  media: {
+    images: Array<any>;
+  };
+  price: {
+    current: {
+      value: number;
+    };
+  };
+}
+
+export const Product: React.FC = () => {
   const { productId } = useParams<IdParams>();
   const dispatch = useDispatch();
 
@@ -45,7 +50,7 @@ export default function Product() {
     setImage(product?.selectedProduct?.media?.images[0].url);
   }, [product]);
 
-  const handleAddToCart = (product: any) => {
+  const handleAddToCart = (product: IProduct) => {
     dispatch(
       addItemToCart({
         id: product.id,
@@ -53,7 +58,7 @@ export default function Product() {
         gender: product.gender,
         color: product.media.images[0].colour,
         images: product.media.images,
-        price: product.price.current.value
+        price: product.price.current.value,
       })
     );
     setCartSnackbar(true);
@@ -145,4 +150,4 @@ export default function Product() {
       )}
     </Item>
   );
-}
+};

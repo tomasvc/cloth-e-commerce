@@ -1,7 +1,7 @@
 import React from 'react'
 import './styles.css'
 
-export default function Footer() {
+export const Footer: React.FC = () => {
     return (
         <footer className="footer">
             <div className="footer__top">

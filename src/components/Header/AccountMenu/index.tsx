@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function AccountMenu() {
+export const AccountMenu: React.FC = () => {
   return (
     <div>index</div>
   )

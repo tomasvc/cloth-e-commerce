@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { addItemToCart, removeItemFromCart } from "../../slices/cartSlice";
+import { addItemToCart, removeItemFromCart } from "slices/cartSlice";
 import { Item, Button } from "./styles";
 
 type CartItemProps = {
@@ -13,7 +13,7 @@ type CartItemProps = {
   quantity: number;
 };
 
-export default function CartItem(cartItem: CartItemProps) {
+export const CartItem: React.FC<CartItemProps> = (cartItem) => {
   const { name, gender, color, images, price, quantity } = cartItem;
   const dispatch = useDispatch();
 

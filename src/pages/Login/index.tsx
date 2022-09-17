@@ -2,22 +2,20 @@ import React, { useState, ChangeEvent, MouseEvent } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { userLogin } from "../../slices/userSlice";
+import { userLogin } from "slices/userSlice";
 import { updateCartFromFirestore } from "slices/cartSlice";
 import {
   auth,
   signInWithGooglePopup,
   getUserCartFromFirestore,
-} from "../../utils/firebase";
-import { RootState } from "../../store";
+} from "utils/firebase";
+import { RootState } from "store";
 import { StyledLogin } from "./styles";
-import image from "../../assets/images/pexels-ike-louie-natividad-3310694.jpg";
+import image from "assets/images/pexels-ike-louie-natividad-3310694.jpg";
 
-export default function Login() {
+export const Login: React.FC = () => {
   const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
-
-  console.log(user);
 
   const history = useHistory();
 
@@ -44,16 +42,12 @@ export default function Login() {
             photoURL: userCredential.user.photoURL,
           })
         );
-        const cart = await getUserCartFromFirestore(userCredential.user)
-        dispatch(
-          updateCartFromFirestore(cart)
-        );
+        const cart = await getUserCartFromFirestore(userCredential.user);
+        dispatch(updateCartFromFirestore(cart));
         history.push("/");
       })
       .catch((error) => {
-        const errorMessage = error.message;
-        console.log(error);
-        setError(errorMessage);
+        setError(error.errorMessage);
       });
   };
 
@@ -108,4 +102,4 @@ export default function Login() {
       </div>
     </StyledLogin>
   );
-}
+};

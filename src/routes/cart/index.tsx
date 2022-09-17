@@ -1,2 +1,2 @@
-import Cart from '../../pages/Cart'
-export default Cart
+import { Cart } from "pages/Cart";
+export default Cart;

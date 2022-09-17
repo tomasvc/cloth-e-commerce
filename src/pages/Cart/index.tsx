@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "store";
-import CartItem from "components/CartItem";
+import { CartItem } from "components/CartItem";
 import { StyledCart } from "./styles";
 
 import visa from "assets/images/visa.svg";
@@ -20,12 +20,14 @@ type CartItemProps = {
   quantity: number;
 };
 
-export default function Cart() {
+export const Cart: React.FC = () => {
   const user = useSelector((state: RootState) => state.user);
   const cart = useSelector((state: RootState) => state.cart);
 
   const totalPrice = cart?.cartItems?.reduce(
-    (total: number, cartItem: CartItemProps) => total + (cartItem?.price * cartItem?.quantity), 0
+    (total: number, cartItem: CartItemProps) =>
+      total + cartItem?.price * cartItem?.quantity,
+    0
   );
 
   useEffect(() => {
@@ -40,8 +42,8 @@ export default function Cart() {
         {cart?.cartItems?.length ? (
           <>
             <div className="cart__items">
-              {cart?.cartItems?.map((item: CartItemProps, id: number) => {
-                return <CartItem key={id} {...item} />;
+              {cart?.cartItems?.map((cartItem: CartItemProps, id: number) => {
+                return <CartItem key={id} {...cartItem} />;
               })}
             </div>
 
@@ -59,10 +61,7 @@ export default function Cart() {
                 >
                   Continue to checkout
                 </button>
-                <a
-                  href="/products"
-                  className="buttons__continueBtn"
-                >
+                <a href="/products" className="buttons__continueBtn">
                   Continue shopping
                 </a>
               </div>
@@ -81,4 +80,4 @@ export default function Cart() {
       </div>
     </StyledCart>
   );
-}
+};

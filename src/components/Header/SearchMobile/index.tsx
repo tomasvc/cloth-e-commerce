@@ -1,19 +1,19 @@
-import { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { RootState } from "store";
 import { updateResults, clearResults } from "slices/searchSlice";
 import { Searchbar } from "./styles";
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
 const API_KEY = "78a110ed1dmshbcfebcdca14633ap13f5ffjsn7c75c6dcf1c0";
 
-export default function Search() {
+export const SearchMobile: React.FC = () => {
   const [query, setQuery] = useState("");
   const results = useSelector((state: RootState) => state.search);
   const dispatch = useDispatch();
 
-  const options = {
+  const options: AxiosRequestConfig = {
     method: "GET",
     url: "https://asos2.p.rapidapi.com/products/v2/list",
     params: {
@@ -39,19 +39,7 @@ export default function Search() {
     setQuery(event.target.value);
   };
 
-  //   const showResults = (val: any) => {
-  //     let res = document.getElementById("results");
-  //     if (res) {
-  //       res.innerHTML = "";
-  //       let list = "";
-  //       for (let i = 0; i < val?.length; i++) {
-  //         list += "<li>" + val[i]?.name + "</li>";
-  //       }
-  //       res.innerHTML = "<ul>" + list + "</ul>";
-  //     }
-  //   };
-
-  const getResults = (options: any) => {
+  const getResults = (options: AxiosRequestConfig) => {
     query !== ""
       ? axios
           .request(options)

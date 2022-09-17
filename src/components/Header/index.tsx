@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -6,13 +6,13 @@ import { AiOutlineUser } from "react-icons/ai";
 import { BsCart2 } from "react-icons/bs";
 import { FaBars } from "react-icons/fa";
 import { RootState } from "../../store";
-import Categories from "./Categories";
+import { Categories } from "./Categories";
 import { CategoriesMenu } from "./CategoriesMenu";
-import Search from "./Search";
+import { Search } from "./Search";
 
 import { StyledHeader } from "./styles";
 
-export default function Header() {
+export const Header: React.FC = () => {
   const history = useHistory();
 
   const user = useSelector((state: RootState) => state.user);
@@ -27,7 +27,10 @@ export default function Header() {
           aria-label="main navigation"
         >
           <div className="navbar__left">
-            <FaBars className="left__bars" onClick={() => setOpenMenu(!openMenu)} />
+            <FaBars
+              className="left__bars"
+              onClick={() => setOpenMenu(!openMenu)}
+            />
             <div className="left__brand">
               <a href="/">
                 <h3 className="brand__name">Cloth</h3>
@@ -62,4 +65,4 @@ export default function Header() {
       <CategoriesMenu open={openMenu} setOpen={setOpenMenu} />
     </>
   );
-}
+};

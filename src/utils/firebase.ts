@@ -1,17 +1,14 @@
 // import firebase from 'firebase'
 
 // Import the functions you need from the SDKs you need
-import { Query } from "@testing-library/react";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider, User, signOut } from "firebase/auth";
 import {
   getFirestore,
   doc,
   getDoc,
-  getDocs,
   setDoc,
   updateDoc,
-  query,
   QueryDocumentSnapshot
 } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use

@@ -1,7 +1,8 @@
-import image from "../../assets/images/pexels-harsh-kushwaha-1689731.jpg";
+import React from "react";
+import image from "assets/images/pexels-harsh-kushwaha-1689731.jpg";
 import { Homepage } from "./styles";
 
-export default function Home() {
+export const Home: React.FC = () => {
   return (
     <Homepage className="home">
       <div className="home__left">
@@ -18,4 +19,4 @@ export default function Home() {
       </div>
     </Homepage>
   );
-}
+};

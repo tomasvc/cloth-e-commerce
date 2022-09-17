@@ -1,18 +1,39 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Pagination, CircularProgress } from "@mui/material";
-import { fetchProductsByCategoryId } from "../../slices/productSlice";
-import { RootState } from "../../store";
-import ListItem from "../../components/ProductListItem";
+import { fetchProductsByCategoryId } from "slices/productSlice";
+import { RootState } from "store";
+import { ListItem } from "components/ProductListItem";
 import { List } from "./styles";
 
-export default function ProductList() {
+interface IProduct {
+  id: number;
+  name: string;
+  gender: string;
+  color: string;
+  imageUrl: string;
+  images: Array<any>;
+  media: {
+    images: Array<any>;
+  };
+  price: {
+    current: {
+      value: number;
+      text: string;
+    };
+  };
+}
+
+export const ProductList: React.FC = () => {
   const products = useSelector((state: RootState) => state.products);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(
-      fetchProductsByCategoryId({ page: 1, category: products?.categoryId })
+      fetchProductsByCategoryId({
+        page: 1,
+        category: products?.categoryId.toString(),
+      })
     );
   }, [dispatch]);
 
@@ -22,7 +43,10 @@ export default function ProductList() {
 
   const handlePageChange = (page: number) => {
     dispatch(
-      fetchProductsByCategoryId({ page, category: products?.categoryId })
+      fetchProductsByCategoryId({
+        page,
+        category: products?.categoryId.toString(),
+      })
     );
     window.scrollTo(0, 0);
   };
@@ -39,7 +63,7 @@ export default function ProductList() {
 
           {products?.products?.length ? (
             <ul className="product-list__list">
-              {products?.products?.map((product: any) => {
+              {products?.products?.map((product: IProduct) => {
                 return (
                   <ListItem
                     key={product.id}
@@ -67,4 +91,4 @@ export default function ProductList() {
       )}
     </List>
   );
-}
+};

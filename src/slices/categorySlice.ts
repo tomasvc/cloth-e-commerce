@@ -1,5 +1,10 @@
-import { createSlice, createAsyncThunk, AnyAction, PayloadAction } from "@reduxjs/toolkit";
-import { getCategories } from "../utils/firebase";
+import {
+  createSlice,
+  createAsyncThunk,
+  AnyAction,
+  PayloadAction,
+} from "@reduxjs/toolkit";
+import { getCategories } from "utils/firebase";
 
 // type Category = {
 //   id: number,
@@ -11,28 +16,28 @@ import { getCategories } from "../utils/firebase";
 // }
 
 type SliceState = {
-  categories: any,
-  loading: boolean,
-  error: string | undefined
-}
+  categories: any;
+  loading: boolean;
+  error: string | undefined;
+};
 
 const initialState: SliceState = {
   categories: [],
   loading: false,
-  error: ''
-}
+  error: "",
+};
 
 function isActionWithCategoriesPayload<T>(
   action: AnyAction
 ): action is PayloadAction<T> {
-  return typeof action.payload === 'object'
+  return typeof action.payload === "object";
 }
 
 export const fetchCategories = createAsyncThunk(
   "categories/fetchCategories",
   async () => {
-    const data = await getCategories()
-    return data
+    const data = await getCategories();
+    return data;
   }
 );
 

@@ -1,2 +1,2 @@
-import Register from '../../pages/Register'
-export default Register
+import { Register } from "pages/Register";
+export default Register;

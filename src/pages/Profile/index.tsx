@@ -1,24 +1,24 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import { RootState } from "store";
-import { signOutUser } from 'utils/firebase'
-import { userLogout } from 'slices/userSlice'
-import { clearCart } from 'slices/cartSlice'
+import { signOutUser } from "utils/firebase";
+import { userLogout } from "slices/userSlice";
+import { clearCart } from "slices/cartSlice";
 
-export default function Profile() {
+export const Profile: React.FC = () => {
   const user = useSelector((state: RootState) => state.user);
   console.log(user);
 
-  const history = useHistory()
-  const dispatch = useDispatch()
+  const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleSignOut = () => {
     signOutUser();
-    dispatch(userLogout())
-    dispatch(clearCart())
-    history.push('/login')
-  }
+    dispatch(userLogout());
+    dispatch(clearCart());
+    history.push("/login");
+  };
 
   return (
     user && (
@@ -33,4 +33,4 @@ export default function Profile() {
       </div>
     )
   );
-}
+};

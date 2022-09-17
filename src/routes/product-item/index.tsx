@@ -1,2 +1,2 @@
-import ProductItem from '../../pages/ProductItem'
-export default ProductItem
+import { Product } from "pages/Product";
+export default Product;

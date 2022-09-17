@@ -1,15 +1,22 @@
-import { createSlice, createAsyncThunk, AnyAction, PayloadAction } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  AnyAction,
+  PayloadAction,
+} from "@reduxjs/toolkit";
 import axios from "axios";
 
 const API_KEY = "78a110ed1dmshbcfebcdca14633ap13f5ffjsn7c75c6dcf1c0";
 
-// type Props = {
-//   page?: number | undefined;
-//   category?: number | undefined;
-// }
+type Props = {
+  page?: number | undefined;
+  category?: string | undefined;
+};
 
-function isActionWithSelectedPayload<T>(action: AnyAction): action is PayloadAction<T> {
-  return typeof action.payload === 'object'
+function isActionWithSelectedPayload<T>(
+  action: AnyAction
+): action is PayloadAction<T> {
+  return typeof action.payload === "object";
 }
 
 export const fetchProducts = createAsyncThunk(
@@ -41,14 +48,14 @@ export const fetchProducts = createAsyncThunk(
 
 export const fetchProductsByCategoryId = createAsyncThunk(
   "products/fetchProductsByCategoryId",
-  async (props: any) => {
+  async (props: Props) => {
     const data = await axios
       .request({
         method: "GET",
         url: "https://asos2.p.rapidapi.com/products/v2/list",
         params: {
           store: "US",
-          offset: 24 * props?.page - 1,
+          offset: props?.page ? 24 * props?.page - 1 : 24 * 1,
           categoryId: props?.category,
           limit: "24",
           range: "new_season",
@@ -92,24 +99,23 @@ export const fetchProductItemById = createAsyncThunk(
   }
 );
 
-
 type SliceState<T> = {
-  products: Array<T>,
-  selectedProduct: any,
-  categoryId: number,
-  categoryName: string,
-  loading: boolean,
-  error: string | undefined
-}
+  products: Array<T>;
+  selectedProduct: any;
+  categoryId: number;
+  categoryName: string;
+  loading: boolean;
+  error: string | undefined;
+};
 
 const initialState: SliceState<any> = {
   products: [],
   selectedProduct: [],
   categoryId: 4209,
-  categoryName: 'New In',
+  categoryName: "New In",
   loading: false,
   error: "",
-}
+};
 
 export const productSlice = createSlice({
   name: "products",
@@ -119,7 +125,7 @@ export const productSlice = createSlice({
       state.categoryId = action.payload;
     },
     updateCategoryName(state, action) {
-      state.categoryName = action.payload
+      state.categoryName = action.payload;
     },
     selectProduct(state, action) {
       state.selectedProduct = action.payload;
