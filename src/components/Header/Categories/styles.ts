@@ -5,8 +5,6 @@ export const Menu = styled.div`
 .categories {
     background: #525050;
     width: 100vw;
-    margin-bottom: -1rem;
-    position: relative;
     
     @media screen and (max-width: 1750px) {
         display: none;
@@ -15,12 +13,12 @@ export const Menu = styled.div`
 
 ul {
     display: flex;
-    justify-content: start;
-    margin-left: 4rem;
+    justify-content: center;
+    background: #525050;
+    margin: 0;
 
-    @media screen and (max-width: 2000px) {
-        justify-content: center;
-        margin: 0;
+    @media screen and (max-width: 1750px) {
+        display: none;
     }
 }
 
@@ -31,6 +29,7 @@ li {
     font-size: 0.8rem;
     user-select: none;
     cursor: pointer;
+    background: #525050;
 
     @media screen and (max-width: 1750px) {
         display: none;

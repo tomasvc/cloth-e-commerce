@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const List = styled.div`
   margin: auto;
   padding: 2rem 3rem 0 3rem;
+  min-height: 100vh;
   font-family: Montserrat, "Helvetica Neue", Helvetica, Arial;
   display: flex;
   flex-direction: column;

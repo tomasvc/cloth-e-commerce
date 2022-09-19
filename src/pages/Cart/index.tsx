@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { RootState } from "store";
@@ -23,7 +23,6 @@ type CartItemProps = {
 };
 
 export const Cart: React.FC = () => {
-  const user = useSelector((state: RootState) => state.user);
   const cart = useSelector((state: RootState) => state.cart);
 
   const history = useHistory();

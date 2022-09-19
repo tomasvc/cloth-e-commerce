@@ -1,6 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { User } from "firebase/auth";
-import axios from "axios";
 
 type SliceState = {
   user: User | null;

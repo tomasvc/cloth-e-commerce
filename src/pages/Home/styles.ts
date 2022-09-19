@@ -5,8 +5,6 @@ export const Homepage = styled.div`
   height: calc(100vh - 56px);
   display: flex;
   justify-content: space-between;
-  position: relative;
-  top: 15px;
 
   @media screen and (max-width: 1024px) {
     display: block;
@@ -100,7 +98,11 @@ export const Homepage = styled.div`
 
   .right__image {
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: cover;
+
+    @media screen and (max-width: 1200px) {
+      height: 100%;
+    }
   }
 `;

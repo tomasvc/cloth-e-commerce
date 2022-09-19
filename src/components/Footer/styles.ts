@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const StyledFooter = styled.footer`
     font-size: 0.8rem;
     overflow-x: hidden;
-    padding-top: 1rem;
+    position: relative;
     z-index: 10;
 
   .footer__top {

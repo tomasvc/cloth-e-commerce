@@ -3,9 +3,9 @@ import styled from "styled-components";
 export const StyledCart = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
-  min-height: 40vh;
+  height: 100vh;
   padding: 2rem 0;
   background: #fafafa;
 

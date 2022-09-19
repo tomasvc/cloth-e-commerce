@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, MouseEvent } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { userLogin } from "slices/userSlice";
@@ -9,12 +9,10 @@ import {
   signInWithGooglePopup,
   getUserCartFromFirestore,
 } from "utils/firebase";
-import { RootState } from "store";
 import { StyledLogin } from "./styles";
 import image from "assets/images/pexels-ike-louie-natividad-3310694.jpg";
 
 export const Login: React.FC = () => {
-  const user = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
 
   const history = useHistory();

@@ -7,7 +7,6 @@ export const StyledHeader = styled.div`
   display: flex;
   justify-content: space-between;
   position: relative;
-  margin-bottom: -1rem;
   background: rgb(21, 20, 20);
 
 .header__navbar {
