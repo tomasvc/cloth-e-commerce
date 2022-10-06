@@ -1,6 +1,7 @@
 {
-  "name": "e-commerce",
+  "name": "cloth",
   "version": "0.1.0",
+  "homepage": "https://tomasvc.github.io/cloth",
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.4.13",
@@ -31,6 +32,8 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -58,6 +61,7 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/redux-persist": "^4.3.1",
     "@types/styled-components": "^5.1.26",
-    "firebase": "^9.9.0"
+    "firebase": "^9.9.0",
+    "gh-pages": "^4.0.0"
   }
 }

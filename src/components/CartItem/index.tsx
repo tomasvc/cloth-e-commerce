@@ -37,7 +37,7 @@ export const CartItem: React.FC<CartItemProps> = (cartItem) => {
             <Button
               className="quantity__btn btn__remove"
               onClick={() => dispatch(removeItemFromCart(cartItem))}
-            >
+              >
               -
             </Button>
             <p className="quantity__num">{quantity}</p>
@@ -48,12 +48,10 @@ export const CartItem: React.FC<CartItemProps> = (cartItem) => {
               +
             </Button>
           </div>
-          <p className="info__price">
-            ${(price * quantity).toFixed(2)}
-          </p>
+          <p className="info__price">${(price * quantity).toFixed(2)}</p>
         </div>
         <button className="info__addBtn">Add to favorites</button>
       </div>
     </Item>
   );
-}
+};
