@@ -18,7 +18,8 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "https://clever-ptolemy-321751.netlify.app/",
+  "scope": "https://clever-ptolemy-321751.netlify.app/",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff"
