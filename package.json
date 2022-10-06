@@ -1,7 +1,6 @@
 {
   "name": "cloth",
   "version": "0.1.0",
-  "homepage": "https://tomasvc.github.io/cloth",
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.4.13",
