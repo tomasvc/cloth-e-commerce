@@ -79,7 +79,7 @@ export const Product: React.FC = () => {
       >
         <Alert severity="success">Item added to favorites</Alert>
       </Snackbar>
-      {product.loading ? (
+      {product.loading || product.selectedProduct.length === 0 ? (
         <CircularProgress sx={{ margin: "10rem auto", position: "relative" }} />
       ) : (
         <div className="product">
@@ -131,12 +131,6 @@ export const Product: React.FC = () => {
               }}
             ></div>
             <div className="right__buttons">
-              {/* <button
-                className="buttons__addToCart"
-                onClick={() => handleAddToCart(product?.selectedProduct)}
-              >
-                Add to cart
-              </button> */}
               <Button title="Add to cart" onClick={() => handleAddToCart(product?.selectedProduct)} />
               <button
                 className="buttons__favorite"

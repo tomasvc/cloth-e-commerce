@@ -130,6 +130,9 @@ export const productSlice = createSlice({
     selectProduct(state, action) {
       state.selectedProduct = action.payload;
     },
+    resetProduct(state) {
+      state.selectedProduct = [];
+    }
   },
   extraReducers: (builder) => {
     return (
@@ -167,5 +170,5 @@ export const productSlice = createSlice({
   },
 });
 
-export const { updateCategoryId, updateCategoryName } = productSlice.actions;
+export const { updateCategoryId, updateCategoryName, selectProduct, resetProduct } = productSlice.actions;
 export default productSlice.reducer;
