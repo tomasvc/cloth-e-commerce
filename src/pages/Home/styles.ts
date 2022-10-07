@@ -103,6 +103,12 @@ export const Homepage = styled.div`
 
     @media screen and (max-width: 1200px) {
       height: 100%;
+      object-position: center -100px;
+
+      @media screen and (max-width: 500px) {
+        height: 100%;
+        object-position: center center;
+      }
     }
   }
 `;
