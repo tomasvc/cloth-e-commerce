@@ -33,6 +33,11 @@ export const Cart: React.FC = () => {
     0
   );
 
+  window.addEventListener('resize', () => {
+		let vh = window.innerHeight * 0.01;
+		document.documentElement.style.setProperty('--vh', `${vh}px`);
+	});
+
   return (
     <StyledCart className="cart">
       <h1 className="cart__label">Cart</h1>

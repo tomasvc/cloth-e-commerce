@@ -6,6 +6,7 @@ export const StyledCart = styled.div`
   justify-content: start;
   align-items: center;
   height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   padding-bottom: 2rem;
   background: #fafafa;
 
