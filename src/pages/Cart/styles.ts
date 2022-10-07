@@ -5,8 +5,9 @@ export const StyledCart = styled.div`
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  height: 100vh;
-  height: calc(var(--vh, 1vh) * 100);
+  min-height: 100vh;
+  min-height: fill-available;
+  min-height: -webkit-fill-available;
   padding-bottom: 2rem;
   background: #fafafa;
 
