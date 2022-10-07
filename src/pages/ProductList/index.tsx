@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Pagination, CircularProgress } from "@mui/material";
 import { fetchProductsByCategoryId } from "slices/productSlice";
@@ -24,9 +24,24 @@ interface IProduct {
   };
 }
 
+
+
 export const ProductList: React.FC = () => {
+  const [windowSize, setWindowSize] = useState(0);
   const products = useSelector((state: RootState) => state.products);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    window.addEventListener('resize', () => {
+      setWindowSize(window.innerWidth)
+    })
+
+    return () => {
+      window.removeEventListener('resize', () => {
+        return window.innerWidth
+      })
+    }
+  }, [])
 
   useEffect(() => {
     dispatch(
@@ -36,10 +51,6 @@ export const ProductList: React.FC = () => {
       })
     );
   }, [dispatch]);
-
-  useEffect(() => {
-    console.log(products);
-  }, [products]);
 
   const handlePageChange = (page: number) => {
     dispatch(
@@ -84,8 +95,7 @@ export const ProductList: React.FC = () => {
       {products?.products?.length && (
         <Pagination
           sx={{ margin: "auto", mb: 4 }}
-          // page={currentPage}
-          count={10}
+          count={windowSize < 600 ? 5 : 10}
           onChange={(event, page) => handlePageChange(page)}
         />
       )}

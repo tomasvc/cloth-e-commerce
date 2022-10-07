@@ -6,6 +6,10 @@ export const StyledFooter = styled.footer`
     position: relative;
     z-index: 10;
 
+    @media screen and (max-width: 768px) {
+      display: none;
+    }
+
   .footer__top {
     padding: 0.5rem 5rem 1rem 5rem;
     margin: auto;

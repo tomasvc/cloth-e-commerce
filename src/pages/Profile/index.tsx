@@ -11,7 +11,6 @@ import { StyledProfile } from "./styles";
 
 export const Profile: React.FC = () => {
   const user = useSelector((state: RootState) => state.user);
-  console.log(user);
 
   const history = useHistory();
   const dispatch = useDispatch();

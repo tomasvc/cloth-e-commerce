@@ -6,7 +6,7 @@ export const StyledCart = styled.div`
   justify-content: start;
   align-items: center;
   height: 100vh;
-  padding: 2rem 0;
+  padding-bottom: 2rem;
   background: #fafafa;
 
   .cart__label {
@@ -16,7 +16,6 @@ export const StyledCart = styled.div`
   .cart__wrapper {
     display: flex;
     justify-content: center;
-    margin-top: 1rem;
 
     @media screen and (max-width: 1024px) {
       flex-direction: column-reverse;
@@ -120,5 +119,28 @@ export const StyledCart = styled.div`
     display: flex;
     justify-content: space-around;
     margin-top: 1.5rem;
+  }
+
+  .cart__title {
+    @media screen and (max-width: 350px) {
+      font-size: 1.5rem;
+    }
+  }
+
+  .cart__empty {
+    background: #fff;
+    border: 1px solid rgb(216, 216, 216);
+    padding: 1rem 8rem;
+    padding-bottom: 3rem;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 500px;
+
+    @media screen and (max-width: 520px) {
+      padding: 2rem;
+      padding-bottom: 3rem;
+    }
   }
 `;

@@ -2,14 +2,14 @@ import styled from "styled-components";
 
 export const List = styled.div`
   margin: auto;
-  padding: 2rem 3rem 0 3rem;
+  padding: 1rem 3rem 0 3rem;
   min-height: 100vh;
   font-family: Montserrat, "Helvetica Neue", Helvetica, Arial;
   display: flex;
   flex-direction: column;
 
   @media screen and (max-width: 520px) {
-    padding: 2rem 1rem 0 1rem;
+    padding: 1rem 1rem 0 1rem;
   }
 
   a {
@@ -55,6 +55,10 @@ export const List = styled.div`
 
   .MuiPagination-ul li {
     padding: 0.5rem;
+
+    @media screen and (max-width: 600px) {
+      padding: 0;
+    }
   }
 
   .MuiPagination-ul li:hover {

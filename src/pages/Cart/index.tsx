@@ -71,7 +71,12 @@ export const Cart: React.FC = () => {
             </div>
           </>
         ) : (
-          <h3 className="cart__title">Your cart is empty</h3>
+          <div className="cart__empty">
+            <h3 className="cart__title">Your cart is empty</h3>
+            <a href="/products" className="buttons__continueBtn">
+              Continue shopping
+            </a>
+          </div>
         )}
       </div>
     </StyledCart>

@@ -44,7 +44,6 @@ export const SearchMobile: React.FC = () => {
       ? axios
           .request(options)
           .then((response) => {
-            console.log(response.data);
             dispatch(updateResults(response.data.products));
           })
           .catch((error) => {

@@ -71,7 +71,6 @@ const createUserDocumentFromAuth = async (userAuth: User): Promise<void | QueryD
     }
   }
 
-  console.log(userSnapshot);
   return userSnapshot as QueryDocumentSnapshot<UserData>
 };
 
@@ -94,8 +93,6 @@ const getUserCartFromFirestore = async (userAuth: User): Promise<void | Array<an
   const userDocRef = doc(db, "users", userAuth.uid);
 
   const docSnap = await getDoc(userDocRef)
-
-  console.log(docSnap.data())
 
   return docSnap?.data()?.cart as Array<any>
 

@@ -1,8 +1,9 @@
-import React, { useState, ChangeEvent, MouseEvent } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect, ChangeEvent, MouseEvent } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { RootState } from "store";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { userLogin } from "slices/userSlice";
+import { userLogin, userError } from "slices/userSlice";
 import { updateCartFromFirestore } from "slices/cartSlice";
 import {
   auth,
@@ -17,13 +18,26 @@ export const Login: React.FC = () => {
 
   const history = useHistory();
 
+  const user = useSelector((state: RootState) => state.user)
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
   const handleGoogleSignIn = async () => {
-    const response = signInWithGooglePopup();
-    console.log(response);
+    await signInWithGooglePopup().then(async data => {
+      dispatch(userLogin({
+        uid: data.user.uid,
+        displayName: data.user.displayName,
+        email: data.user.email,
+      }))
+      const cart = await getUserCartFromFirestore(data.user);
+      dispatch(updateCartFromFirestore(cart));
+      history.push("/");
+    })
+    .catch((error) => {
+      console.log(error.message)
+      dispatch(userError(error.errorMessage))
+    });
   };
 
   const handleSubmit = (e: MouseEvent<HTMLElement>) => {
@@ -33,6 +47,7 @@ export const Login: React.FC = () => {
         dispatch(
           userLogin({
             uid: userCredential.user.uid,
+            displayName: userCredential.user.displayName,
             email: userCredential.user.email,
             phone: userCredential.user.phoneNumber
           })
@@ -42,7 +57,8 @@ export const Login: React.FC = () => {
         history.push("/");
       })
       .catch((error) => {
-        setError(error.errorMessage);
+        console.log(error.message)
+        dispatch(userError(error.errorMessage))
       });
   };
 
@@ -50,7 +66,7 @@ export const Login: React.FC = () => {
     <StyledLogin className="login">
       <div className="login__left">
         <h3 className="login__title">Login</h3>
-        {error && error}
+        {user.error && <p>{user.error}</p>}
         <form className="login__form" method="post">
           <label htmlFor="email" className="form__label">
             Email

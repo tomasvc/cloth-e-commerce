@@ -41,8 +41,6 @@ export const Product: React.FC = () => {
 
   const product = useSelector((state: RootState) => state.products);
 
-  console.log(product);
-
   useEffect(() => {
     dispatch(fetchProductItemById(productId));
   }, [dispatch, productId]);

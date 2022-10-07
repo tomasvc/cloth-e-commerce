@@ -16,17 +16,12 @@ export const Categories: React.FC = () => {
 
   const dispatch = useDispatch();
   const categories = useSelector((state: RootState) => {
-    console.log(state.categories);
     return state.categories;
   });
 
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
-
-  useEffect(() => {
-    console.log(categories);
-  }, [categories]);
 
   const handleSelect = (id: string, name: string) => {
     dispatch(fetchProductsByCategoryId({ page: 1, category: id }));
