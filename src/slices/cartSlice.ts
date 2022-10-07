@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { updateUserCart } from "utils/firebase";
+import { updateUserCart, updateUserFavorites } from "utils/firebase";
 import { getAuth } from "firebase/auth";
 
 type CartItem = {
@@ -19,7 +19,6 @@ type FavoriteItem = {
   color: string;
   images: Array<any>;
   price: number;
-  quantity: number;
 };
 
 type SliceState = {
@@ -89,8 +88,24 @@ export const cartSlice = createSlice({
         (item) => item.id !== action.payload.id
       );
     },
+    updateFavoritesFromFirestore(state, action) {
+      state.favoriteItems = action.payload;
+    },
     addItemToFavorites(state, action) {
-      state.favoriteItems = [...state.favoriteItems, action.payload];
+      const itemExists = state.favoriteItems?.find(
+        (item) => item.id === action.payload.id
+      );
+
+      const auth = getAuth();
+
+      if (!itemExists) { 
+        if (state.favoriteItems.length) {
+          state.favoriteItems = [...state.favoriteItems, {...action.payload}] 
+        } else {
+          state.favoriteItems = [{...action.payload}]
+        }
+      }
+      auth.currentUser && updateUserFavorites(auth.currentUser, state.favoriteItems);
     },
     removeItemFromFavorites(state, action) {
       state.favoriteItems = state.favoriteItems.filter(
@@ -103,6 +118,7 @@ export const cartSlice = createSlice({
 
 export const {
   updateCartFromFirestore,
+  updateFavoritesFromFirestore,
   clearCart,
   addItemToCart,
   removeItemFromCart,

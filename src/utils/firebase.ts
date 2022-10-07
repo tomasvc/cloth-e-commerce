@@ -98,11 +98,28 @@ const getUserCartFromFirestore = async (userAuth: User): Promise<void | Array<an
 
 }
 
+const getUserFavoritesFromFirestore = async (userAuth: User): Promise<void | Array<any>> => {
+  const userDocRef = doc(db, "users", userAuth.uid);
+
+  const docSnap = await getDoc(userDocRef)
+
+  return docSnap?.data()?.favorites as Array<any>
+
+}
+
 const updateUserCart = async (userAuth: User, items: any) => {
   const userDocRef = doc(db, "users", userAuth.uid);
 
   await updateDoc(userDocRef, {
     cart: items
+  })
+}
+
+const updateUserFavorites = async (userAuth: User, items: any) => {
+  const userDocRef = doc(db, "users", userAuth.uid);
+
+  await updateDoc(userDocRef, {
+    favorites: items
   })
 }
 
@@ -114,5 +131,7 @@ export {
   signOutUser,
   getCategories,
   updateUserCart,
-  getUserCartFromFirestore
+  updateUserFavorites,
+  getUserCartFromFirestore,
+  getUserFavoritesFromFirestore
 };

@@ -1,6 +1,12 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { addItemToCart, removeItemFromCart } from "slices/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "store";
+import {
+  addItemToCart,
+  removeItemFromCart,
+  addItemToFavorites,
+  removeItemFromFavorites,
+} from "slices/cartSlice";
 import { Item, Button } from "./styles";
 
 type CartItemProps = {
@@ -15,7 +21,18 @@ type CartItemProps = {
 
 export const CartItem: React.FC<CartItemProps> = (cartItem) => {
   const { name, gender, color, images, price, quantity } = cartItem;
+  const cart = useSelector((state: RootState) => state.cart);
   const dispatch = useDispatch();
+
+  const isItemInFavorites = (item: CartItemProps) => {
+    return cart.favoriteItems?.find((item) => item.id === cartItem?.id);
+  };
+
+  const handleAddToFavorites = (item: CartItemProps) => {
+    isItemInFavorites(item)
+      ? dispatch(removeItemFromFavorites(cartItem))
+      : dispatch(addItemToFavorites(cartItem));
+  };
 
   return (
     <Item className="cart__item">
@@ -37,7 +54,7 @@ export const CartItem: React.FC<CartItemProps> = (cartItem) => {
             <Button
               className="quantity__btn btn__remove"
               onClick={() => dispatch(removeItemFromCart(cartItem))}
-              >
+            >
               -
             </Button>
             <p className="quantity__num">{quantity}</p>
@@ -50,7 +67,12 @@ export const CartItem: React.FC<CartItemProps> = (cartItem) => {
           </div>
           <p className="info__price">${(price * quantity).toFixed(2)}</p>
         </div>
-        <button className="info__addBtn">Add to favorites</button>
+        <button
+          className="info__addBtn"
+          onClick={() => handleAddToFavorites(cartItem)}
+        >
+          {isItemInFavorites(cartItem) ? "Remove item from favorites" : "Add item to favorites"}
+        </button>
       </div>
     </Item>
   );

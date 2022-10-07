@@ -5,7 +5,11 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { Alert, CircularProgress, Snackbar } from "@mui/material";
 import { Button } from "components/Button";
 import { fetchProductItemById } from "slices/productSlice";
-import { addItemToCart } from "slices/cartSlice";
+import {
+  addItemToCart,
+  addItemToFavorites,
+  removeItemFromFavorites,
+} from "slices/cartSlice";
 import { RootState } from "store";
 import { Item } from "./styles";
 
@@ -27,6 +31,7 @@ interface IProduct {
       value: number;
     };
   };
+  isItemInFavorites?: boolean;
 }
 
 export const Product: React.FC = () => {
@@ -40,6 +45,7 @@ export const Product: React.FC = () => {
   const [image, setImage] = useState();
 
   const product = useSelector((state: RootState) => state.products);
+  const cart = useSelector((state: RootState) => state.cart);
 
   useEffect(() => {
     dispatch(fetchProductItemById(productId));
@@ -47,7 +53,10 @@ export const Product: React.FC = () => {
 
   useEffect(() => {
     setImage(product?.selectedProduct?.media?.images[0].url);
-  }, [product]);
+    cart.favoriteItems?.find((item) => item.id === product?.selectedProduct?.id)
+      ? setFillHeart(true)
+      : setFillHeart(false);
+  }, [product, cart.favoriteItems]);
 
   const handleAddToCart = (product: IProduct) => {
     dispatch(
@@ -61,6 +70,35 @@ export const Product: React.FC = () => {
       })
     );
     setCartSnackbar(true);
+  };
+
+  const handleAddToFavorites = (product: IProduct) => {
+    if (!fillHeart) {
+      dispatch(
+        addItemToFavorites({
+          id: product.id,
+          name: product.name,
+          gender: product.gender,
+          color: product.media.images[0].colour,
+          images: product.media.images,
+          price: product.price.current.value,
+        })
+      );
+      setFavSnackbar(true);
+    } else {
+      dispatch(
+        removeItemFromFavorites({
+          id: product.id,
+          name: product.name,
+          gender: product.gender,
+          color: product.media.images[0].colour,
+          images: product.media.images,
+          price: product.price.current.value,
+        })
+      );
+      setFavSnackbar(true);
+    }
+    setFillHeart(!fillHeart);
   };
 
   return (
@@ -77,7 +115,7 @@ export const Product: React.FC = () => {
         autoHideDuration={6000}
         onClose={() => setFavSnackbar(false)}
       >
-        <Alert severity="success">Item added to favorites</Alert>
+        <Alert severity="success">{fillHeart ? "Item added to favorites" : "Item removed from favorites"}</Alert>
       </Snackbar>
       {product.loading || product.selectedProduct.length === 0 ? (
         <CircularProgress sx={{ margin: "10rem auto", position: "relative" }} />
@@ -131,10 +169,13 @@ export const Product: React.FC = () => {
               }}
             ></div>
             <div className="right__buttons">
-              <Button title="Add to cart" onClick={() => handleAddToCart(product?.selectedProduct)} />
+              <Button
+                title="Add to cart"
+                onClick={() => handleAddToCart(product?.selectedProduct)}
+              />
               <button
                 className="buttons__favorite"
-                onClick={() => setFillHeart(!fillHeart)}
+                onClick={() => handleAddToFavorites(product?.selectedProduct)}
               >
                 {fillHeart ? <AiFillHeart /> : <AiOutlineHeart />}
               </button>

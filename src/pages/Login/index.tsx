@@ -4,11 +4,12 @@ import { useHistory } from "react-router-dom";
 import { RootState } from "store";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { userLogin, userError } from "slices/userSlice";
-import { updateCartFromFirestore } from "slices/cartSlice";
+import { updateCartFromFirestore, updateFavoritesFromFirestore } from "slices/cartSlice";
 import {
   auth,
   signInWithGooglePopup,
   getUserCartFromFirestore,
+  getUserFavoritesFromFirestore
 } from "utils/firebase";
 import { StyledLogin } from "./styles";
 import image from "assets/images/pexels-ike-louie-natividad-3310694.jpg";
@@ -31,7 +32,9 @@ export const Login: React.FC = () => {
         email: data.user.email,
       }))
       const cart = await getUserCartFromFirestore(data.user);
+      const favorites = await getUserFavoritesFromFirestore(data.user);
       dispatch(updateCartFromFirestore(cart));
+      dispatch(updateFavoritesFromFirestore(favorites));
       history.push("/");
     })
     .catch((error) => {
@@ -53,6 +56,8 @@ export const Login: React.FC = () => {
           })
         );
         const cart = await getUserCartFromFirestore(userCredential.user);
+        const favorites = await getUserFavoritesFromFirestore(userCredential.user);
+        dispatch(updateFavoritesFromFirestore(favorites));
         dispatch(updateCartFromFirestore(cart));
         history.push("/");
       })

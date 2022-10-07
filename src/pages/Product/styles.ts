@@ -149,6 +149,7 @@ export const Item = styled.div`
 
   .right__buttons {
     display: flex;
+    align-items: center;
     margin-top: 2rem;
   }
 

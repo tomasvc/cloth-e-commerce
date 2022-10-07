@@ -5,6 +5,7 @@ import { Home } from "pages/Home";
 import { Header } from "components/Header";
 import { Footer } from "components/Footer";
 import { Cart } from "pages/Cart";
+import { Favorites } from "pages/Favorites";
 import { Login } from "pages/Login";
 import { Register } from "pages/Register";
 import { ProductList } from "pages/ProductList";
@@ -23,6 +24,7 @@ function App() {
           <Route exact path="/register" component={Register} />
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/cart" component={Cart} />
+          <Route exact path="/favorites" component={Favorites} />
           <Route exact path="/products" component={ProductList} />
           <Route exact path="/product/:productId" component={Product} />
         </Switch>
