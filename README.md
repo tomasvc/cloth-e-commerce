@@ -1,4 +1,4 @@
-<p align="center"><img src="https://imgur.com/IpobtEP" alt="Cloth image"></p>
+<p align="center"><img src="https://i.imgur.com/IpobtEP.png" alt="Cloth image"></p>
 
 #Cloth
 
