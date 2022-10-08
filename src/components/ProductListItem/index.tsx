@@ -11,14 +11,15 @@ type ItemProps = {
 };
 
 export const ListItem: React.FC<ItemProps> = (props: ItemProps) => {
-
   const dispatch = useDispatch();
-
 
   return (
     <Item className="list__item">
       <div className="item__top">
-        <a onClick={() => dispatch(resetProduct())} href={"/product/" + props.id}>
+        <a
+          onClick={() => dispatch(resetProduct())}
+          href={"/product/" + props.id}
+        >
           <img
             className="top__image"
             src={"https://" + props.image}
@@ -27,7 +28,10 @@ export const ListItem: React.FC<ItemProps> = (props: ItemProps) => {
         </a>
       </div>
       <div className="item__info">
-        <a onClick={() => dispatch(resetProduct())} href={"/product/" + props.id}>
+        <a
+          onClick={() => dispatch(resetProduct())}
+          href={"/product/" + props.id}
+        >
           <p className="info__title">{props.name}</p>
         </a>
         <div className="info__bottom">

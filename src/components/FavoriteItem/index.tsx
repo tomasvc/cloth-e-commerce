@@ -18,9 +18,9 @@ export const FavoriteItem: React.FC<FavoriteItemProps> = (favoriteItem) => {
   const dispatch = useDispatch();
 
   const handleMoveToCart = (item: FavoriteItemProps) => {
-    dispatch(addItemToCart(item))
-    dispatch(removeItemFromFavorites(item))
-  }
+    dispatch(addItemToCart(item));
+    dispatch(removeItemFromFavorites(item));
+  };
 
   return (
     <Item className="favorite__item">
@@ -40,8 +40,18 @@ export const FavoriteItem: React.FC<FavoriteItemProps> = (favoriteItem) => {
           <p className="info__price">${price?.toFixed(2)}</p>
         </div>
         <div className="info__buttons">
-            <button onClick={() => handleMoveToCart(favoriteItem)} className="info__btn">Move to cart</button>
-            <button onClick={() => dispatch(removeItemFromFavorites(favoriteItem))} className="info__btn remove__btn">Remove from favorites</button>
+          <button
+            onClick={() => handleMoveToCart(favoriteItem)}
+            className="info__btn"
+          >
+            Move to cart
+          </button>
+          <button
+            onClick={() => dispatch(removeItemFromFavorites(favoriteItem))}
+            className="info__btn remove__btn"
+          >
+            Remove from favorites
+          </button>
         </div>
       </div>
     </Item>
