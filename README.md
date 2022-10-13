@@ -1,5 +1,5 @@
 <p align="center"><img src="https://i.imgur.com/IpobtEP.png" alt="Cloth image"></p>
-<p align="center"><img src="https://i.imgur.com/mx7iKDm.png" alt="Cloth mobile"></p>
+<p align="center"><img src="https://i.imgur.com/wAD7viz.png" alt="Cloth mobile"></p>
 
 # Cloth - E-commerce Clothing Store
 
