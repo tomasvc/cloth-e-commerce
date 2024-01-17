@@ -4,6 +4,6 @@
 
 # Cloth - E-commerce Clothing Store
 
-Mock clothing store connected to the ASOS API, built with React, Redux, TypeScript, and CSS/Styled components.
+Mock clothing store connected to the ASOS API, built with React, Redux, React Query, TypeScript, and Tailwind.
 
-Live demo: https://clever-ptolemy-321751.netlify.app/
+Live demo: [https://clever-ptolemy-321751.netlify.app/](https://main--clever-ptolemy-321751.netlify.app/)Demo
