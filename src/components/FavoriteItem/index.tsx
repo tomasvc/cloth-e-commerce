@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { removeItemFromFavorites, addItemToCart } from "slices/cartSlice";
-import { Item } from "./styles";
+import { addItemToCartThunk } from "slices/cartSlice";
+import { removeItemFromFavoritesThunk } from "slices/favoriteSlice";
 
 type FavoriteItemProps = {
   id: string;
@@ -10,7 +10,7 @@ type FavoriteItemProps = {
   color: string;
   images: Array<any>;
   price: number;
-  quantity?: number;
+  quantity: number;
 };
 
 export const FavoriteItem: React.FC<FavoriteItemProps> = (favoriteItem) => {
@@ -18,42 +18,45 @@ export const FavoriteItem: React.FC<FavoriteItemProps> = (favoriteItem) => {
   const dispatch = useDispatch();
 
   const handleMoveToCart = (item: FavoriteItemProps) => {
-    dispatch(addItemToCart(item));
-    dispatch(removeItemFromFavorites(item));
+    dispatch(addItemToCartThunk(item));
+    dispatch(removeItemFromFavoritesThunk(item));
   };
 
   return (
-    <Item className="favorite__item">
-      <div className="item__image">
+    <div
+      className="font-['Oswald'] flex flex-col sm:flex-row gap-6 w-full mb-4 p-8 bg-white border border-gray-100"
+      style={{ boxShadow: "2px 4px 15px rgba(0, 0, 0, 0.05)" }}
+    >
+      <div className="mx-auto">
         <img
           src={images && "https://" + images[0]?.url}
           alt={name}
           width="120"
         />
       </div>
-      <div className="item__info">
-        <p className="info__name">{name}</p>
-        <p className="info__genderAndColor">
+      <div className="w-full">
+        <p className="text-lg font-medium">{name}</p>
+        <p className="py-1">
           {gender} | {color}
         </p>
-        <div className="info__bottom">
-          <p className="info__price">${price?.toFixed(2)}</p>
+        <div>
+          <p className="py-4 font-semibold">${price?.toFixed(2)}</p>
         </div>
-        <div className="info__buttons">
+        <div className="flex flex-col gap-2 w-full sm:w-1/2 lg:w-1/4">
           <button
             onClick={() => handleMoveToCart(favoriteItem)}
-            className="info__btn"
+            className="w-full uppercase bg-gray-800 text-white py-2 rounded mt-2 hover:sm:bg-amber-600 transition ease-out"
           >
             Move to cart
           </button>
           <button
-            onClick={() => dispatch(removeItemFromFavorites(favoriteItem))}
-            className="info__btn remove__btn"
+            onClick={() => dispatch(removeItemFromFavoritesThunk(favoriteItem))}
+            className="text-center uppercase text-gray-800 py-2 border border-slate-800 rounded hover:sm:bg-slate-100 transition"
           >
             Remove from favorites
           </button>
         </div>
       </div>
-    </Item>
+    </div>
   );
 };

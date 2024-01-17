@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { RootState } from "store";
 import { updateResults, clearResults } from "slices/searchSlice";
-import { Searchbar } from "./styles";
+// import { Searchbar } from "./styles";
 import axios, { AxiosRequestConfig } from "axios";
 
 const API_KEY = "78a110ed1dmshbcfebcdca14633ap13f5ffjsn7c75c6dcf1c0";
@@ -66,15 +66,19 @@ export const Search: React.FC = () => {
   }, [results]);
 
   return (
-    <Searchbar className="left__input">
+    <div className="w-1/2">
       <form autoComplete="off">
         <input
           onChange={handleChange}
-          className="input"
+          className="bg-white/30 text-white placeholder-white px-4 py-2 w-full"
           type="text"
           placeholder="Search for items and brands"
         />
-        <div id="results" style={{ visibility: query ? "visible" : "hidden" }}>
+        <div
+          id="results"
+          style={{ visibility: query ? "visible" : "hidden" }}
+          className="hidden"
+        >
           <ul>
             {results?.loading && <li>Loading...</li>}
             {results?.results?.length ? (
@@ -97,6 +101,6 @@ export const Search: React.FC = () => {
           </ul>
         </div>
       </form>
-    </Searchbar>
+    </div>
   );
 };

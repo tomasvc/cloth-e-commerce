@@ -17,9 +17,9 @@ import {
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyBZiDP7YVBUXtwPfr0i_b0FQnIL3e5nmGY",
-  authDomain: "clothing-store-e17ce.firebaseapp.com",
-  projectId: "clothing-store-e17ce",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
   storageBucket: "clothing-store-e17ce.appspot.com",
   messagingSenderId: "377376276086",
   appId: "1:377376276086:web:cfc61b8164f55e45452957",
@@ -83,6 +83,7 @@ const getCategories = async (): Promise<
   const querySnapshot = await getDoc(docRef);
 
   if (querySnapshot.exists()) {
+    console.log(querySnapshot.data().items)
     return querySnapshot.data().items as Category;
   } else {
     console.log("no such document");
@@ -112,6 +113,8 @@ const updateUserCart = async (userAuth: User, items: any) => {
 
   await updateDoc(userDocRef, {
     cart: items
+  }).catch(error => {
+    console.error(error)
   })
 }
 
@@ -120,6 +123,8 @@ const updateUserFavorites = async (userAuth: User, items: any) => {
 
   await updateDoc(userDocRef, {
     favorites: items
+  }).catch(error => {
+    console.error(error)
   })
 }
 

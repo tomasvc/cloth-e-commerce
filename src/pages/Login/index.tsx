@@ -1,50 +1,29 @@
-import React, { useState, useEffect, ChangeEvent, MouseEvent } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { RootState } from "store";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { userLogin, userError } from "slices/userSlice";
-import { updateCartFromFirestore, updateFavoritesFromFirestore } from "slices/cartSlice";
+import { updateCartFromFirestore } from "slices/cartSlice";
+import { updateFavoritesFromFirestore } from "slices/favoriteSlice";
+import { LoginForm } from "./components/LoginForm";
+import image from "assets/images/pexels-ike-louie-natividad-3310694.jpg";
 import {
-  auth,
   signInWithGooglePopup,
   getUserCartFromFirestore,
-  getUserFavoritesFromFirestore
+  getUserFavoritesFromFirestore,
+  auth,
 } from "utils/firebase";
-import { StyledLogin } from "./styles";
-import image from "assets/images/pexels-ike-louie-natividad-3310694.jpg";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 export const Login: React.FC = () => {
   const dispatch = useDispatch();
-
   const history = useHistory();
 
-  const user = useSelector((state: RootState) => state.user)
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
-  const handleGoogleSignIn = async () => {
-    await signInWithGooglePopup().then(async data => {
-      dispatch(userLogin({
-        uid: data.user.uid,
-        displayName: data.user.displayName,
-        email: data.user.email,
-      }))
-      const cart = await getUserCartFromFirestore(data.user);
-      const favorites = await getUserFavoritesFromFirestore(data.user);
-      dispatch(updateCartFromFirestore(cart));
-      dispatch(updateFavoritesFromFirestore(favorites));
-      history.push("/");
-    })
-    .catch((error) => {
-      console.log(error.message)
-      dispatch(userError(error.errorMessage))
-    });
-  };
-
-  const handleSubmit = (e: MouseEvent<HTMLElement>) => {
-    e.preventDefault();
+  const handleFormSubmit = async (email: string, password: string) => {
+    setIsLoading(true);
     signInWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         dispatch(
@@ -52,70 +31,70 @@ export const Login: React.FC = () => {
             uid: userCredential.user.uid,
             displayName: userCredential.user.displayName,
             email: userCredential.user.email,
-            phone: userCredential.user.phoneNumber
+            phone: userCredential.user.phoneNumber,
           })
         );
         const cart = await getUserCartFromFirestore(userCredential.user);
-        const favorites = await getUserFavoritesFromFirestore(userCredential.user);
+        const favorites = await getUserFavoritesFromFirestore(
+          userCredential.user
+        );
         dispatch(updateFavoritesFromFirestore(favorites));
         dispatch(updateCartFromFirestore(cart));
-        history.push("/");
+        setIsLoading(false);
+        history.push("/profile");
       })
       .catch((error) => {
-        console.log(error.message)
-        dispatch(userError(error.errorMessage))
+        if (error.code === "auth/wrong-password") {
+          setError("Wrong password");
+        } else if (error.code === "auth/user-not-found") {
+          setError("The user with that email was not found");
+        } else {
+          setError(
+            `An error has occured while trying to login (${error.code})`
+          );
+        }
+        dispatch(userError(error.errorMessage));
+        setIsLoading(false);
+      });
+  };
+
+  const handleGoogleSignIn = async () => {
+    await signInWithGooglePopup()
+      .then(async (data) => {
+        dispatch(
+          userLogin({
+            uid: data.user.uid,
+            displayName: data.user.displayName,
+            email: data.user.email,
+          })
+        );
+        const cart = await getUserCartFromFirestore(data.user);
+        const favorites = await getUserFavoritesFromFirestore(data.user);
+        dispatch(updateCartFromFirestore(cart));
+        dispatch(updateFavoritesFromFirestore(favorites));
+        history.push("/profile");
+      })
+      .catch((error) => {
+        console.log(error.message);
+        dispatch(userError(error.errorMessage));
       });
   };
 
   return (
-    <StyledLogin className="login">
-      <div className="login__left">
-        <h3 className="login__title">Login</h3>
-        {user.error && <p>{user.error}</p>}
-        <form className="login__form" method="post">
-          <label htmlFor="email" className="form__label">
-            Email
-          </label>
-          <input
-            type="email"
-            className="form__input"
-            name="email"
-            placeholder="Email"
-            required
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setEmail(e.target.value)
-            }
-          />
-          <label htmlFor="password" className="form__label">
-            Password
-          </label>
-          <input
-            type="password"
-            className="form__input"
-            placeholder="Password"
-            required
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setPassword(e.target.value)
-            }
-          />
-          <button
-            type="submit"
-            className="form__submit"
-            onClick={(e: MouseEvent<HTMLElement>) => handleSubmit(e)}
-          >
-            Login
-          </button>
-        </form>
-        <p className="login__registerLink">
-          Don't have an account? <a href="/register">Register.</a>
-        </p>
-        <button className="login__googleBtn" onClick={handleGoogleSignIn}>
-          Sign In With Google
-        </button>
+    <div className="flex flex-col-reverse lg:flex-row">
+      <LoginForm
+        onSubmit={handleFormSubmit}
+        onGoogleSignIn={handleGoogleSignIn}
+        error={error}
+        isLoading={isLoading}
+      />
+      <div className="w-full h-[40vh] lg:w-1/2 lg:h-screen">
+        <img
+          className="object-cover object-top w-full h-full"
+          src={image}
+          alt="Login background"
+        />
       </div>
-      <div className="login__right">
-        <img className="right__image" src={image} alt="" />
-      </div>
-    </StyledLogin>
+    </div>
   );
 };

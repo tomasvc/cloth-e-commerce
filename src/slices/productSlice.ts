@@ -25,7 +25,7 @@ export const fetchProducts = createAsyncThunk(
     return axios
       .request({
         method: "GET",
-        url: "https://asos2.p.rapidapi.com/products/v2/list",
+        url: "https://asos10.p.rapidapi.com/api/v1/getProductList",
         params: {
           store: "US",
           offset: 24 * page - 1,
@@ -38,7 +38,7 @@ export const fetchProducts = createAsyncThunk(
           lang: "en-US",
         },
         headers: {
-          "x-rapidapi-host": "asos2.p.rapidapi.com",
+          "x-rapidapi-host": "asos10.p.rapidapi.com",
           "x-rapidapi-key": API_KEY,
         },
       })
@@ -49,28 +49,27 @@ export const fetchProducts = createAsyncThunk(
 export const fetchProductsByCategoryId = createAsyncThunk(
   "products/fetchProductsByCategoryId",
   async (props: Props) => {
-    const data = await axios
+    return axios
       .request({
         method: "GET",
-        url: "https://asos2.p.rapidapi.com/products/v2/list",
+        url: "https://asos10.p.rapidapi.com/api/v1/getProductList",
         params: {
-          store: "US",
           offset: props?.page ? 24 * props?.page - 1 : 24 * 1,
           categoryId: props?.category,
           limit: "24",
-          range: "new_season",
-          sort: "freshness",
           currency: "USD",
+          country: "US",
           sizeSchema: "US",
           lang: "en-US",
         },
         headers: {
-          "x-rapidapi-host": "asos2.p.rapidapi.com",
+          "x-rapidapi-host": "asos10.p.rapidapi.com",
           "x-rapidapi-key": API_KEY,
         },
       })
-      .then((response) => response.data.products);
-    return data;
+      .then((response) => {
+        return response
+      });
   }
 );
 
@@ -93,7 +92,7 @@ export const fetchProductItemById = createAsyncThunk(
           "x-rapidapi-key": API_KEY,
         },
       })
-      .then((response) => response.data)
+      .then((response) => response.data.products)
       .catch((error) => console.error(error));
     return data;
   }
@@ -136,23 +135,8 @@ export const productSlice = createSlice({
   },
   extraReducers: (builder) => {
     return (
-      builder.addCase(fetchProductsByCategoryId.pending, (state) => {
-        state.loading = true;
-        // eslint-disable-next-line no-sequences
-      }),
-      builder.addCase(fetchProductsByCategoryId.fulfilled, (state, action) => {
-        state.products = action.payload;
-        state.loading = false;
-        state.error = "";
-      }),
-      builder.addCase(fetchProductsByCategoryId.rejected, (state, action) => {
-        state.products = [];
-        state.loading = false;
-        state.error = action.error.message;
-      }),
       builder.addCase(fetchProductItemById.pending, (state) => {
         state.loading = true;
-        // eslint-disable-next-line no-sequences
       }),
       builder.addCase(fetchProductItemById.fulfilled, (state, action) => {
         state.selectedProduct = action.payload;

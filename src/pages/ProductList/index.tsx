@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 import { Pagination, CircularProgress } from "@mui/material";
-import { fetchProductsByCategoryId } from "slices/productSlice";
-import { RootState } from "store";
 import { ListItem } from "components/ProductListItem";
-import { List } from "./styles";
+import { motion } from "framer-motion";
+import { useProductList } from "api/getProductListById";
 
 interface IProduct {
   id: number;
   name: string;
   gender: string;
   color: string;
+  isSellingFast: boolean;
   imageUrl: string;
   images: Array<any>;
   media: {
@@ -21,84 +21,99 @@ interface IProduct {
       value: number;
       text: string;
     };
+    previous: {
+      value: number;
+      text: string;
+    };
   };
 }
 
-
+type IDParams = {
+  categoryId: string;
+};
 
 export const ProductList: React.FC = () => {
   const [windowSize, setWindowSize] = useState(0);
-  const products = useSelector((state: RootState) => state.products);
-  const dispatch = useDispatch();
+  const [page, setPage] = useState(1);
+
+  const { categoryId } = useParams<IDParams>();
+
+  const {
+    data: productList,
+    isLoading,
+    isError,
+  } = useProductList({
+    page,
+    categoryId,
+  });
 
   useEffect(() => {
-    window.addEventListener('resize', () => {
-      setWindowSize(window.innerWidth)
-    })
+    window.addEventListener("resize", () => {
+      setWindowSize(window.innerWidth);
+    });
 
     return () => {
-      window.removeEventListener('resize', () => {
-        return window.innerWidth
-      })
-    }
-  }, [])
+      window.removeEventListener("resize", () => {
+        return window.innerWidth;
+      });
+    };
+  }, []);
 
-  useEffect(() => {
-    dispatch(
-      fetchProductsByCategoryId({
-        page: 1,
-        category: products?.categoryId.toString(),
-      })
-    );
-  }, [dispatch]);
-
-  const handlePageChange = (page: number) => {
-    dispatch(
-      fetchProductsByCategoryId({
-        page,
-        category: products?.categoryId.toString(),
-      })
-    );
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
     window.scrollTo(0, 0);
   };
 
   return (
-    <List className="product-list">
-      {products?.loading ? (
-        <CircularProgress sx={{ margin: "10rem auto", position: "relative" }} />
+    <div>
+      {isLoading ? (
+        <div className="w-screen h-screen flex justify-center items-center m-auto">
+          <CircularProgress />
+        </div>
+      ) : isError ? (
+        <p>Error</p>
       ) : (
-        <>
-          <h1 style={{ margin: "2rem auto", fontWeight: 300 }}>
-            {products?.categoryName}
+        <div className="font-['Oswald'] pt-14 max-w-7xl w-full mx-auto px-2 md:px-6">
+          <h1 className="mx-auto my-10 font-light text-4xl text-center">
+            {productList?.data?.data?.categoryName}
           </h1>
 
-          {products?.products?.length ? (
-            <ul className="product-list__list">
-              {products?.products?.map((product: IProduct) => {
-                return (
-                  <ListItem
-                    key={product.id}
-                    id={product.id}
-                    name={product.name}
-                    price={product.price.current.text}
-                    image={product.imageUrl}
-                  />
-                );
-              })}
+          {productList && (
+            <ul className="grid gap-y-4 grid-cols-2 lg:grid-cols-4 justify-center mx-auto">
+              {productList?.data?.data?.products?.map(
+                (product: IProduct, id: number) => {
+                  return (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                    >
+                      <ListItem
+                        key={id}
+                        id={product.id}
+                        name={product.name}
+                        price={product.price}
+                        image={product.imageUrl}
+                        isSellingFast={product.isSellingFast}
+                      />
+                    </motion.div>
+                  );
+                }
+              )}
             </ul>
-          ) : (
-            <p className="product-list__not-found">No items found</p>
           )}
-        </>
+        </div>
       )}
 
-      {products?.products?.length && (
+      {productList && (
         <Pagination
-          sx={{ margin: "auto", mb: 4 }}
+          className="my-20 flex justify-center"
           count={windowSize < 600 ? 5 : 10}
-          onChange={(event, page) => handlePageChange(page)}
+          page={page}
+          onChange={(_, page) => {
+            handlePageChange(page);
+          }}
         />
       )}
-    </List>
+    </div>
   );
 };

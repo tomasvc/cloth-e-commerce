@@ -1,112 +1,191 @@
-import React, { useState, SyntheticEvent } from "react";
+import React, { useState } from "react";
 import {
   getAuth,
   updateProfile,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { createUserDocumentFromAuth } from "utils/firebase";
-import { userLogin } from "slices/userSlice"
+import { userLogin } from "slices/userSlice";
+import { Spinner } from "components/Icons";
+import { useForm, SubmitHandler } from "react-hook-form";
 
-import { StyledRegister } from "./styles";
+import image from "assets/images/register-bg.jpg";
 
-import image from "assets/images/pexels-ike-louie-natividad-3310694.jpg";
+interface IFormInputs {
+  name: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
+}
 
 export const Register: React.FC = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const {
+    register,
+    watch,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<IFormInputs>();
+  const [isLoading, setIsLoading] = useState(false);
 
   const auth = getAuth();
-  const history = useHistory()
-  const dispatch = useDispatch()
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const handleSubmit = (e: SyntheticEvent<HTMLElement>) => {
-    e.preventDefault();
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        auth.currentUser && createUserDocumentFromAuth(auth.currentUser);
-        auth.currentUser &&
-          updateProfile(auth.currentUser, {
-            displayName: name,
-          }).then(() => {
-            dispatch(userLogin(auth.currentUser))
-            history.push('/')
-          }).catch((error) => {
-            setError(error.message)
-          })
-      })
-      .catch((error) => {
-        setError(error.errorMessage);
-      });
+  const onSubmit: SubmitHandler<IFormInputs> = async (data: any) => {
+    try {
+      setIsLoading(true);
+      await createUserWithEmailAndPassword(auth, data?.email, data?.password);
+      if (auth.currentUser) {
+        await createUserDocumentFromAuth(auth.currentUser);
+        await updateProfile(auth.currentUser, { displayName: data?.name });
+        dispatch(userLogin(auth.currentUser));
+        setIsLoading(false);
+        history.push("/login");
+      }
+    } catch (error: any) {
+      console.log(error);
+      setSubmitError(error.code);
+      setIsLoading(false);
+    }
   };
 
   return (
-    <StyledRegister className="register">
-      <div className="register__left">
-        <h3 className="register__title">Register</h3>
-        {error && <p>{error}</p>}
-          <form className="register__form" onSubmit={handleSubmit}>
-            <label htmlFor="name" className="form__label">
+    <div className="flex flex-col-reverse lg:flex-row justify-between w-screen max-h-screen">
+      <div className="flex flex-col justify-center items-center w-full lg:w-1/2 px-8 pt-10 pb-14 lg:p-0">
+        <h3 className="text-3xl lg:text-4xl font-['Oswald']">Register</h3>
+        <form
+          className="flex flex-col mt-8 w-full lg:w-1/2"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <div className="flex flex-col mb-4">
+            <label
+              htmlFor="name"
+              className="text-light text-xs tracking-wide uppercase mb-1"
+            >
               Name
             </label>
             <input
               type="text"
-              className="form__input"
-              name="name"
+              className="px-3 py-2 border border-gray-500 bg-white rounded-sm text-sm"
               placeholder="Name"
               required
-              onChange={(e) => setName(e.target.value)}
+              {...register("name", { required: true })}
+              aria-invalid={errors.name ? "true" : "false"}
             />
+            {errors.name?.type === "required" && (
+              <p role="alert" className="text-sm text-red-700 pt-1">
+                Name is required
+              </p>
+            )}
+          </div>
 
-            <label htmlFor="email" className="form__label">
+          <div className="flex flex-col mb-4">
+            <label
+              htmlFor="email"
+              className="text-light text-xs tracking-wide uppercase mb-1"
+            >
               Email
             </label>
             <input
               type="email"
-              className="form__input"
-              name="email"
+              className="px-3 py-2 border border-gray-500 bg-white rounded-sm text-sm"
               placeholder="Email"
               required
-              onChange={(e) => setEmail(e.target.value)}
+              {...register("email", { required: true })}
+              aria-invalid={errors.email ? "true" : "false"}
             />
+            {errors.email && (
+              <p role="alert" className="text-sm text-red-700 pt-1">
+                {errors.email?.message as string}
+              </p>
+            )}
+            {submitError === "auth/email-already-in-use" && (
+              <p role="alert" className="text-sm text-red-700 pt-1">
+                This email is already in use
+              </p>
+            )}
+          </div>
 
-            <label htmlFor="password1" className="form__label">
+          <div className="flex flex-col mb-4">
+            <label
+              htmlFor="password1"
+              className="text-light text-xs tracking-wide uppercase mb-1"
+            >
               Password
             </label>
             <input
               type="password"
-              className="form__input"
-              name="password1"
+              className="px-3 py-2 border border-gray-500 bg-white rounded-sm text-sm"
               placeholder="Password"
               required
-              onChange={(e) => setPassword(e.target.value)}
+              {...register("password", { required: true })}
+              aria-invalid={errors.password ? "true" : "false"}
             />
+            {errors.password?.type === "required" && (
+              <p role="alert" className="text-sm text-red-700 pt-1">
+                Password is required
+              </p>
+            )}
+          </div>
 
-            <label htmlFor="password2" className="form__label">
+          <div className="flex flex-col mb-4">
+            <label
+              htmlFor="passwordConfirm"
+              className="text-light text-xs tracking-wide uppercase mb-1"
+            >
               Confirm Password
             </label>
             <input
               type="password"
-              className="form__input"
-              name="password2"
+              className="px-3 py-2 border border-gray-500 bg-white rounded-sm text-sm"
               placeholder="Confirm password"
               required
+              {...register("passwordConfirm", {
+                required: true,
+                validate: (val: string) => {
+                  if (watch("password") !== val) {
+                    return "Your passwords do not match";
+                  }
+                },
+              })}
+              aria-invalid={errors.passwordConfirm ? "true" : "false"}
             />
+            {errors.passwordConfirm?.type === "required" && (
+              <p role="alert" className="text-sm text-red-700 pt-1">
+                Password confirmation is required
+              </p>
+            )}
+            {errors.passwordConfirm && (
+              <p role="alert" className="text-sm text-red-700 pt-1">
+                {errors.passwordConfirm?.message}
+              </p>
+            )}
+          </div>
 
-            <button type="submit" className="form__submit">
-              Register
-            </button>
-          </form>
-        <p className="login__registerLink">
-          Already have an account? <a href="/login">Login.</a>
+          <button
+            type="submit"
+            className="flex justify-center items-center bg-gray-800 text-white py-2 rounded mt-3 hover:sm:bg-slate-600 transition"
+          >
+            {isLoading ? <Spinner /> : "Register"}
+          </button>
+        </form>
+        <p className="text-sm mt-6">
+          Already have an account?{" "}
+          <Link to="/login" className="text-blue-600">
+            Login
+          </Link>
         </p>
       </div>
-      <div className="register__right">
-        <img className="right__image" src={image} alt="" />
+      <div className="w-full lg:w-1/2">
+        <img
+          className="object-cover object-image-mobile lg:object-top w-full h-full"
+          src={image}
+          alt="Register background"
+        />
       </div>
-    </StyledRegister>
+    </div>
   );
 };

@@ -1,22 +1,22 @@
 import React from "react";
-import image from "assets/images/pexels-harsh-kushwaha-1689731.jpg";
-import { Homepage } from "./styles";
 
 export const Home: React.FC = () => {
   return (
-    <Homepage className="home">
-      <div className="home__left">
-        <h2 className="left__greeting">New collection. 2022.</h2>
-        <button
-          className="left__button"
-          onClick={() => (document.location.href = "/products")}
-        >
-          Browse Store
-        </button>
+    <div className="font-['Oswald'] pt-14 w-full min-h-screen">
+      <div className="bg-[url('assets/images/clothing-store.jpg')] bg-center bg-cover relative w-full h-full min-h-screen">
+        <div className="absolute top-0 left-0 w-full h-full bg-black/40"></div>
+        <div className="w-full min-h-screen flex flex-col gap-10 justify-center items-center">
+          <h2 className="text-white text-5xl lg:text-7xl text-center drop-shadow-lg">
+            New items — {new Date().getFullYear()}
+          </h2>
+          <button
+            className="px-10 py-3 text-white tracking-wider uppercase drop-shadow-lg rounded bg-gray-900 hover:bg-amber-600 hover:scale-110 transition-all duration-300 ease-out"
+            onClick={() => (document.location.href = "/products/27110")}
+          >
+            Browse store
+          </button>
+        </div>
       </div>
-      <div className="home__right">
-        <img src={image} className="right__image" alt="..." />
-      </div>
-    </Homepage>
+    </div>
   );
 };

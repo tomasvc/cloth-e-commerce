@@ -2,11 +2,11 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import productReducer from 'slices/productSlice'
 import userReducer from 'slices/userSlice'
 import searchReducer from 'slices/searchSlice'
-import categoryReducer from 'slices/categorySlice'
+import menuReducer from 'slices/menuSlice'
 import cartReducer from 'slices/cartSlice'
+import favoriteReducer from './slices/favoriteSlice'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-
 
 const persistConfig = {
     key: 'root',
@@ -17,14 +17,19 @@ const rootReducer = combineReducers({
     user: userReducer,
     products: productReducer,
     search: searchReducer,
-    categories: categoryReducer,
-    cart: cartReducer
+    menu: menuReducer,
+    cart: cartReducer,
+    favorites: favoriteReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export const store = configureStore({
-    reducer: persistedReducer
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) => 
+        getDefaultMiddleware({
+            serializableCheck: false
+        })
 })
 
 export const persistor = persistStore(store)

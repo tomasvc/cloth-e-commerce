@@ -1,43 +1,48 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { resetProduct } from "slices/productSlice";
-import { Item } from "./styles";
 
 type ItemProps = {
   id: number;
   image: string;
   name: string;
-  price: string;
+  price: {
+    current: {
+      value: number;
+      text: string;
+    };
+    previous: {
+      value: number;
+      text: string;
+    };
+  };
+  isSellingFast: boolean;
 };
 
 export const ListItem: React.FC<ItemProps> = (props: ItemProps) => {
   const dispatch = useDispatch();
 
   return (
-    <Item className="list__item">
-      <div className="item__top">
-        <a
-          onClick={() => dispatch(resetProduct())}
-          href={"/product/" + props.id}
-        >
-          <img
-            className="top__image"
-            src={"https://" + props.image}
-            alt={props.name}
-          />
-        </a>
-      </div>
-      <div className="item__info">
-        <a
-          onClick={() => dispatch(resetProduct())}
-          href={"/product/" + props.id}
-        >
-          <p className="info__title">{props.name}</p>
-        </a>
-        <div className="info__bottom">
-          <p className="bottom__price">{props.price}</p>
+    <a onClick={() => dispatch(resetProduct())} href={"/product/" + props.id}>
+      <div className="flex flex-col text-gray-800 h-full p-2.5 sm:hover:shadow-lg sm:hover:cursor-pointer sm:hover:scale-105 transition-all ease-out">
+        <img src={"https://" + props.image} alt={props.name} />
+        <div className="h-full flex flex-col justify-between gap-2 pt-1.5">
+          <p className="md:text-xl font-light overflow-hidden overflow-ellipsis">
+            {props.name}
+          </p>
+          <div className="flex flex-col-reverse md:flex-row gap-0 md:gap-1 items-start md:items-end">
+            <p className="text-xl font-medium">{props.price.current.text}</p>
+            <p className="text-gray-400 text-sm line-through pb-[0.15rem]">
+              {props.price.previous.text}
+            </p>
+            {props.isSellingFast && (
+              <p className="text-xs text-gray-500 tracking-wide pb-[4px]">
+                Selling fast
+              </p>
+            )}
+          </div>
         </div>
       </div>
-    </Item>
+    </a>
   );
 };
