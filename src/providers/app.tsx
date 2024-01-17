@@ -18,7 +18,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
       }
     >
       <QueryClientProvider client={queryClient}>
-        {process.env.NODE_ENV !== "test" && <ReactQueryDevtools />}
+        {process.env.NODE_ENV === "development" && <ReactQueryDevtools />}
         <AnimatePresence mode="wait">{children}</AnimatePresence>
       </QueryClientProvider>
     </React.Suspense>

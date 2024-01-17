@@ -26,8 +26,7 @@ export const userSlice = createSlice({
     userError(state, action) {
       state.error = action.payload
     }
-  },
-  extraReducers: {},
+  }
 });
 
 export const { userLogin, userLogout, userError } = userSlice.actions;

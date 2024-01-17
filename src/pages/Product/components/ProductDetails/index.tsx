@@ -85,7 +85,6 @@ export const ProductDetails = ({ product, setSelectedSize, size }: Props) => {
         <div className="w-1/3 my-2 border font-roboto">
           <select
             className="w-full"
-            placeholder="Select size"
             onChange={(e) => {
               setSelectedSize(e.target.value);
             }}

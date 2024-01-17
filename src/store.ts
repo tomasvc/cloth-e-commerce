@@ -1,4 +1,5 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit'
+import { configureStore } from '@reduxjs/toolkit'
+import { combineReducers } from 'redux'
 import productReducer from 'slices/productSlice'
 import userReducer from 'slices/userSlice'
 import searchReducer from 'slices/searchSlice'
@@ -26,7 +27,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 export const store = configureStore({
     reducer: persistedReducer,
-    middleware: (getDefaultMiddleware) => 
+    middleware: (getDefaultMiddleware: any) => 
         getDefaultMiddleware({
             serializableCheck: false
         })
