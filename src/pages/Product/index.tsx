@@ -32,8 +32,6 @@ export const Product: React.FC = () => {
     productId,
   });
 
-  console.log(product);
-
   const { data: alsoLikeData } = useAlsoLike({
     productId,
   });
@@ -47,7 +45,6 @@ export const Product: React.FC = () => {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
 
   const [fillHeart, setFillHeart] = useState(false);
-
   const favorites = useSelector((state: RootState) => state.favorites);
 
   useEffect(() => {
