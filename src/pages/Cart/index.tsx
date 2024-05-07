@@ -106,7 +106,7 @@ export const Cart: React.FC = () => {
               </div>
             </div>
           ) : (
-            <div className="flex flex-col justify-center items-center w-full h-full pb-20">
+            <div className="flex flex-col justify-center items-center w-full h-screen -mt-20">
               <h1 className="w-fit text-4xl font-medium px-4 xl:px-0 pb-6 uppercase tracking-widest">
                 Cart
               </h1>

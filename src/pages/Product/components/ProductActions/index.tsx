@@ -75,7 +75,9 @@ export const ProductActions = ({
         <button
           className="text-sm uppercase bg-gray-800 text-white px-6 py-3 rounded hover:sm:bg-amber-600 transition ease-out"
           title="Add to cart"
-          onClick={() => handleAddToCart(product)}
+          onClick={() =>
+            user.user ? handleAddToCart(product) : history.push("/login")
+          }
         >
           Add to cart
         </button>

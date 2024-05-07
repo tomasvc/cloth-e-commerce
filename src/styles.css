@@ -625,6 +625,12 @@ video {
 .mt-auto {
   margin-top: auto;
 }
+.-mt-40 {
+  margin-top: -10rem;
+}
+.-mt-20 {
+  margin-top: -5rem;
+}
 .flex {
   display: flex;
 }
@@ -664,6 +670,9 @@ video {
 }
 .h-screen {
   height: 100vh;
+}
+.h-max {
+  height: max-content;
 }
 .max-h-screen {
   max-height: 100vh;
@@ -797,6 +806,9 @@ video {
 }
 .self-center {
   align-self: center;
+}
+.justify-self-center {
+  justify-self: center;
 }
 .overflow-hidden {
   overflow: hidden;
