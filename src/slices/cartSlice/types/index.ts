@@ -15,4 +15,5 @@ export interface SliceState {
     items: Array<CartItem>;
     loading: boolean;
     error: string | null;
+    actionCompleted?: string | null;
 }

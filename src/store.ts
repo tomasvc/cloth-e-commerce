@@ -5,7 +5,7 @@ import userReducer from 'slices/userSlice'
 import searchReducer from 'slices/searchSlice'
 import menuReducer from 'slices/menuSlice'
 import cartReducer from 'slices/cartSlice'
-import favoriteReducer from './slices/favoriteSlice'
+import favoritesReducer from './slices/favoriteSlice'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
@@ -20,7 +20,7 @@ const rootReducer = combineReducers({
     search: searchReducer,
     menu: menuReducer,
     cart: cartReducer,
-    favorites: favoriteReducer
+    favorites: favoritesReducer
 })
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

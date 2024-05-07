@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Alert, CircularProgress, Snackbar } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import { fetchProductItemById } from "slices/productSlice";
 import { addItemToCartThunk } from "slices/cartSlice";
 import {
   addItemToFavoritesThunk,
   removeItemFromFavoritesThunk,
-  resetActionCompletedFlag,
 } from "../../slices/favoriteSlice";
 import { useProduct } from "api/getProduct";
+import { useProductPrice } from "api/getProductPrice";
 import { useAlsoLike } from "api/getAlsoLike";
 import { useBuyTheLook } from "api/getBuyTheLook";
-import { RootState } from "store";
 import { motion } from "framer-motion";
 import { Product as ProductType } from "./types";
 
@@ -31,6 +30,9 @@ export const Product: React.FC = () => {
   const { data: product, isLoading } = useProduct({
     productId,
   });
+  const { data: productPrice, isLoading: isPriceLoading } = useProductPrice({
+    productId,
+  });
 
   const { data: alsoLikeData } = useAlsoLike({
     productId,
@@ -40,34 +42,48 @@ export const Product: React.FC = () => {
     productId,
   });
 
-  const [cartSnackbar, setCartSnackbar] = useState(false);
-  const [favSnackbar, setFavSnackbar] = useState(false);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
-
-  const [fillHeart, setFillHeart] = useState(false);
-  const favorites = useSelector((state: RootState) => state.favorites);
 
   useEffect(() => {
     dispatch(fetchProductItemById(productId));
   }, [dispatch, productId]);
 
-  useEffect(() => {
-    const isFavorite = favorites.items?.some(
-      (item) => item.id === product?.data.data.id
-    );
-    setFillHeart(isFavorite);
-  }, [product, favorites.items]);
-
-  useEffect(() => {
-    if (favorites.actionCompleted) {
-      setFavSnackbar(true);
-      dispatch(resetActionCompletedFlag());
-    }
-  }, [favorites.actionCompleted, dispatch]);
-
   const handleAddToCart = (product: ProductType) => {
     dispatch(
       addItemToCartThunk({
+        id: product?.id,
+        name: product?.name!,
+        gender: product.gender!,
+        color: product?.media?.images?.length
+          ? product?.media.images[0].colour!
+          : "N/A",
+        images: product?.media?.images?.length ? product?.media?.images : null,
+        price: productPrice?.data[0]?.productPrice?.current?.value!,
+        quantity: 1,
+        size: selectedSize,
+      })
+    );
+  };
+
+  const handleAddToFavorites = (product: ProductType) => {
+    dispatch(
+      addItemToFavoritesThunk({
+        id: product?.id,
+        name: product?.name!,
+        gender: product?.gender!,
+        color: product?.media?.images?.length
+          ? product.media.images[0].colour!
+          : "N/A",
+        images: product?.media?.images?.length ? product?.media?.images : null,
+        price: productPrice?.data[0]?.productPrice?.current?.value!,
+        quantity: 1,
+      })
+    );
+  };
+
+  const handleRemoveFromFavorites = (product: ProductType) => {
+    dispatch(
+      removeItemFromFavoritesThunk({
         id: product.id,
         name: product.name!,
         gender: product.gender!,
@@ -75,87 +91,38 @@ export const Product: React.FC = () => {
           ? product.media.images[0].colour!
           : "N/A",
         images: product?.media?.images?.length ? product.media.images : null,
-        price: product.price?.current?.value!,
+        price: productPrice?.data[0]?.productPrice?.current?.value!,
         quantity: 1,
-        size: selectedSize,
       })
     );
-    setCartSnackbar(true);
-  };
-
-  const handleAddToFavorites = (product: ProductType) => {
-    if (!fillHeart) {
-      dispatch(
-        addItemToFavoritesThunk({
-          id: product.id,
-          name: product.name!,
-          gender: product.gender!,
-          color: product?.media?.images?.length
-            ? product.media.images[0].colour!
-            : "N/A",
-          images: product?.media?.images?.length ? product.media.images : null,
-          price: product.price?.current?.value!,
-          quantity: 1,
-        })
-      );
-    } else {
-      dispatch(
-        removeItemFromFavoritesThunk({
-          id: product.id,
-          name: product.name!,
-          gender: product.gender!,
-          color: product?.media?.images?.length
-            ? product.media.images[0].colour!
-            : "N/A",
-          images: product?.media?.images?.length ? product.media.images : null,
-          price: product.price?.current?.value!,
-          quantity: 1,
-        })
-      );
-    }
   };
 
   return (
     <div>
-      <Snackbar
-        open={cartSnackbar}
-        autoHideDuration={6000}
-        onClose={() => setCartSnackbar(false)}
-      >
-        <Alert severity="success">Item added to cart</Alert>
-      </Snackbar>
-      <Snackbar
-        open={favSnackbar}
-        autoHideDuration={6000}
-        onClose={() => setFavSnackbar(false)}
-      >
-        <Alert severity="success">
-          {fillHeart
-            ? "Item added to favorites"
-            : "Item removed from favorites"}
-        </Alert>
-      </Snackbar>
-      {isLoading ? (
+      {isLoading || isPriceLoading ? (
         <div className="w-screen h-screen flex justify-center items-center">
           <CircularProgress
             sx={{ margin: "10rem auto", position: "relative" }}
           />
         </div>
-      ) : (
+      ) : product?.data ? (
         <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}>
           <div className="flex flex-col lg:flex-row gap-8 font-['Oswald'] max-w-7xl mx-auto px-4 md:px-8 my-10 pt-10">
-            <ProductGallery product={product?.data?.data} />
+            <ProductGallery product={product?.data} />
             <div className="w-full lg:w-1/2">
               <ProductDetails
-                product={product?.data?.data}
+                product={product?.data}
+                productPrice={
+                  productPrice?.data[0]?.productPrice?.current?.text!
+                }
                 setSelectedSize={setSelectedSize}
                 size={selectedSize || ""}
               />
               <ProductActions
-                product={product?.data?.data}
+                product={product?.data}
                 handleAddToCart={handleAddToCart}
                 handleAddToFavorites={handleAddToFavorites}
-                fillHeart={fillHeart}
+                handleRemoveFromFavorites={handleRemoveFromFavorites}
               />
             </div>
           </div>
@@ -208,23 +175,24 @@ export const Product: React.FC = () => {
                       return (
                         <a
                           key={index}
-                          href={`/product/${item.id}`}
+                          href={`/product/${item?.id}`}
                           className="w-1/2 sm:w-1/3 lg:w-1/6 h-auto p-2.5 sm:hover:shadow-lg sm:hover:cursor-pointer sm:hover:scale-105 transition-all ease-out"
                         >
                           <img
-                            src={item.imageUrl || ""}
-                            alt={item.name}
+                            src={item?.imageUrl || ""}
+                            alt={item?.name}
                             className="w-full h-auto"
                           />
                           <p className="pt-2 font-light text-lg truncate">
-                            {item.name}
+                            {item?.name}
                           </p>
                           <div>
                             <p className="font-medium">
-                              {item.price.current.text}
+                              {item?.price.current.text}
                             </p>
                             <p className="text-gray-400 font-light line-through">
-                              {item.price.previous && item.price.previous.text}
+                              {item?.price.previous &&
+                                item?.price.previous.text}
                             </p>
                           </div>
                         </a>
@@ -235,6 +203,12 @@ export const Product: React.FC = () => {
               </div>
             </div>
           )}
+        </motion.div>
+      ) : (
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}>
+          <div className="py-20 max-w-7xl mx-auto">
+            <p className="px-8">Details of this product could not be found.</p>
+          </div>
         </motion.div>
       )}
     </div>

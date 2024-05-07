@@ -4,12 +4,18 @@ import { useState, useEffect } from "react";
 
 type Props = {
   product: Product;
+  productPrice: string;
   setSelectedSize: (size: string) => void;
   size: string | "";
 };
 
-export const ProductDetails = ({ product, setSelectedSize, size }: Props) => {
-  const color = product.media?.images?.[0]?.colour || "N/A";
+export const ProductDetails = ({
+  product,
+  productPrice,
+  setSelectedSize,
+  size,
+}: Props) => {
+  const color = product?.media?.images?.[0]?.colour || "N/A";
   const [stars, setStars] = useState<any>([]);
 
   useEffect(() => {
@@ -39,38 +45,38 @@ export const ProductDetails = ({ product, setSelectedSize, size }: Props) => {
   return (
     <div className="max-w-lg md:max-w-auto mx-auto">
       <p className="uppercase text-sm tracking-widest font-light">
-        {product?.pdpLayout + " — " + product.productType?.name}
+        {product?.pdpLayout + " — " + product?.productType?.name}
       </p>
-      <h3 className="text-3xl font-light pt-1 pb-6">{product.name}</h3>
+      <h3 className="text-3xl font-light pt-1 pb-6">{product?.name}</h3>
       <div className="flex items-end gap-2">
-        <p className="text-xl font-medium">{product.price?.current?.text}</p>
-        {product.price?.previous?.text! !== product.price?.current?.text && (
+        <p className="text-xl font-medium">{productPrice}</p>
+        {/* {product?.price?.previous?.text! !== product?.price?.current?.text && (
           <p className="line-through text-gray-500 font-light">
-            {product.price?.previous?.text!}
+            {product?.price?.previous?.text!}
           </p>
-        )}
+        )} */}
       </div>
-      {product.rating && (
+      {product?.rating && (
         <div className="flex flex-col mt-2 mb-4 hover:cursor-pointer w-fit">
           <div className="flex gap-0.5">
-            {stars.map((star: any) => {
+            {stars.map((star: any, index: number) => {
               return star === "full star" ? (
-                <IoMdStar size={25} />
+                <IoMdStar size={25} key={index} />
               ) : star === "half star" ? (
-                <IoMdStarHalf size={25} />
+                <IoMdStarHalf size={25} key={index} />
               ) : (
-                <IoMdStarOutline size={25} />
+                <IoMdStarOutline size={25} key={index} />
               );
             })}
           </div>
           <p className="pt-1 pl-1 text-gray-500 text-xs">
-            {product.rating?.totalReviewCount}
-            {product.rating?.totalReviewCount === 1 ? " rating" : " ratings"}
+            {product?.rating?.totalReviewCount}
+            {product?.rating?.totalReviewCount === 1 ? " rating" : " ratings"}
           </p>
         </div>
       )}
       <p className="font-roboto uppercase tracking-widest text-sm pb-1 pt-6">
-        Gender: {product.gender}
+        Gender: {product?.gender}
       </p>
       <p className="font-roboto uppercase tracking-widest text-sm">
         Color: {color}
@@ -78,7 +84,7 @@ export const ProductDetails = ({ product, setSelectedSize, size }: Props) => {
       <div
         className="mt-4 mb-6 font-roboto font-light"
         dangerouslySetInnerHTML={{
-          __html: product.description || "",
+          __html: product?.description || "",
         }}
       ></div>
       {product?.variants?.length! > 1 && (
@@ -90,7 +96,7 @@ export const ProductDetails = ({ product, setSelectedSize, size }: Props) => {
             }}
             value={size}
           >
-            {product.variants?.map((variant: any, index: number) => (
+            {product?.variants?.map((variant: any, index: number) => (
               <option
                 key={index}
                 disabled={!variant?.isAvailable}

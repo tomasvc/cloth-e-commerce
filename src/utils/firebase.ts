@@ -83,7 +83,6 @@ const getCategories = async (): Promise<
   const querySnapshot = await getDoc(docRef);
 
   if (querySnapshot.exists()) {
-    console.log(querySnapshot.data().items)
     return querySnapshot.data().items as Category;
   } else {
     console.log("no such document");
@@ -94,6 +93,8 @@ const getUserCartFromFirestore = async (userAuth: User): Promise<void | Array<an
   const userDocRef = doc(db, "users", userAuth.uid);
 
   const docSnap = await getDoc(userDocRef)
+
+  console.log(docSnap?.data())
 
   return docSnap?.data()?.cart as Array<any>
 
@@ -119,10 +120,21 @@ const updateUserCart = async (userAuth: User, items: any) => {
 }
 
 const updateUserFavorites = async (userAuth: User, items: any) => {
+  const cleanedItems = items.map((item: any) => {
+    const cleanedItem = { ...item };
+    Object.keys(cleanedItem).forEach(key => {
+      if (cleanedItem[key] === undefined) {
+        console.error(`Undefined value found in item at key '${key}':`, item);
+        cleanedItem[key] = null;
+      }
+    });
+    return cleanedItem;
+  });
+
   const userDocRef = doc(db, "users", userAuth.uid);
 
   await updateDoc(userDocRef, {
-    favorites: items
+    favorites: cleanedItems
   }).catch(error => {
     console.error(error)
   })

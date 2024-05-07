@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { addItemToCartThunk } from "slices/cartSlice";
 import { removeItemFromFavoritesThunk } from "slices/favoriteSlice";
+import { resetProduct } from "slices/productSlice";
 
 type FavoriteItemProps = {
   id: string;
@@ -35,7 +36,13 @@ export const FavoriteItem: React.FC<FavoriteItemProps> = (favoriteItem) => {
         />
       </div>
       <div className="w-full">
-        <p className="text-lg font-medium">{name}</p>
+        <a
+          onClick={() => dispatch(resetProduct())}
+          href={"/product/" + favoriteItem.id}
+          className="text-lg font-medium"
+        >
+          {name}
+        </a>
         <p className="py-1">
           {gender} | {color}
         </p>

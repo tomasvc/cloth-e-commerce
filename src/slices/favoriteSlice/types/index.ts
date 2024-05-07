@@ -7,12 +7,12 @@ export interface CartItem {
     color: string;
     images: any;
     price: number;
-    quantity: number;
+    quantity?: number;
 }
 
 export interface SliceState {
     items: any[];
     loading: boolean;
     error: string | null;
-    actionCompleted: string | null;
+    actionCompleted?: string | null;
 }

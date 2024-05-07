@@ -8,6 +8,7 @@ const initialState: SliceState = {
   items: [],
   loading: false,
   error: "",
+  actionCompleted: null,
 };
 
 const addItemToArray = (array: CartItem[], item: CartItem): CartItem[] => {
@@ -91,6 +92,9 @@ export const cartSlice = createSlice({
         (item) => item.id !== action.payload.id
       );
     },
+    resetCartActionCompletedFlag(state) {
+      state.actionCompleted = null;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -101,6 +105,7 @@ export const cartSlice = createSlice({
       .addCase(addItemToCartThunk.fulfilled, (state, action) => {
         state.items = action.payload;
         state.loading = false;
+        state.actionCompleted = "add";
       })
       .addCase(addItemToCartThunk.rejected, (state, action) => {
         state.loading = false;
@@ -113,6 +118,7 @@ export const cartSlice = createSlice({
       .addCase(removeItemFromCartThunk.fulfilled, (state, action) => {
         state.items = action.payload;
         state.loading = false;
+        state.actionCompleted = "remove";
       })
       .addCase(removeItemFromCartThunk.rejected, (state, action) => {
         state.loading = false;
@@ -123,6 +129,7 @@ export const cartSlice = createSlice({
 
 export const {
   updateCartFromFirestore,
+  resetCartActionCompletedFlag,
   clearCart,
   clearItemFromCart,
 } = cartSlice.actions;

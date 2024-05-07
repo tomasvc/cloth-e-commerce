@@ -15,7 +15,7 @@ export const ProductGallery = ({ product }: Props) => {
   }, [product]);
 
   return (
-    <div className="flex flex-col-reverse lg:flex-row gap-2 w-full sm:w-1/2 lg:w-full mx-auto h-auto">
+    <div className="flex flex-col-reverse lg:flex-row gap-2 w-full sm:w-1/2 mx-auto h-auto">
       <div className="flex flex-row lg:flex-col gap-2">
         {product?.media?.images?.map((image: any) => {
           return (
@@ -34,7 +34,7 @@ export const ProductGallery = ({ product }: Props) => {
       <img
         className="w-full h-auto"
         src={"https://" + image}
-        alt={product.name}
+        alt={product?.name}
       />
     </div>
   );

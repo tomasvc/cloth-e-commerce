@@ -33,7 +33,7 @@ export const Cart: React.FC = () => {
 
   return (
     <MainLayout>
-      <div className="flex flex-col justify-center items-center min-h-screen max-w-7xl mx-auto px-4 md:px-8 pb-10 mt-16 bg-gray-50 font-['Oswald']">
+      <div className="flex flex-col justify-start items-center min-h-screen max-w-7xl mx-auto px-4 md:px-8 pb-10 mt-16 bg-gray-50 font-['Oswald']">
         <div className="flex flex-col justify-left w-full lg:flex-row gap-4 pb-20">
           {cart?.items?.length ? (
             <div className="flex flex-col w-full pt-10">

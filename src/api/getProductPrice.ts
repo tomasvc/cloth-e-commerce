@@ -7,12 +7,11 @@ type Props = {
     productId: string;
 }
 
-export const getProduct = ({ productId }: Props): Promise<any> => {
-    return axios.get('https://asos2.p.rapidapi.com/products/v4/detail', {
+export const getProductPrice = ({ productId }: Props): Promise<any> => {
+    return axios.get('https://asos2.p.rapidapi.com/products/v4/get-stock-price', {
         params: {
-            id: productId,
+            productIds: productId,
             currency: "USD",
-            country: "US",
             sizeSchema: "US",
             lang: "en-US",
           },
@@ -25,17 +24,17 @@ export const getProduct = ({ productId }: Props): Promise<any> => {
       })
 }
 
-type QueryFnType = typeof getProduct;
+type QueryFnType = typeof getProductPrice;
 
-type UseProductOptions = {
+type UseProductPriceOptions = {
   productId: string;
   config?: QueryConfig<QueryFnType>;
 };
 
-export const useProduct = ({ productId, config }: UseProductOptions) => {
+export const useProductPrice = ({ productId, config }: UseProductPriceOptions) => {
   return useQuery<ExtractFnReturnType<QueryFnType>>({
-    queryKey: ['product', productId],
-    queryFn: () => getProduct({ productId }),
+    queryKey: ['productPrice', productId],
+    queryFn: () => getProductPrice({ productId }),
     ...config,
   });
 };

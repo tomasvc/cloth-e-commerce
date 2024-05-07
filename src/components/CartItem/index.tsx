@@ -6,6 +6,7 @@ import {
   addItemToFavoritesThunk,
   removeItemFromFavoritesThunk,
 } from "../../slices/favoriteSlice";
+import { resetProduct } from "slices/productSlice";
 import { FiPlus, FiMinus } from "react-icons/fi";
 
 type CartItemProps = {
@@ -47,7 +48,13 @@ export const CartItem: React.FC<CartItemProps> = (cartItem) => {
         />
       </div>
       <div className="w-full">
-        <p className="text-lg font-medium">{name}</p>
+        <a
+          onClick={() => dispatch(resetProduct())}
+          href={"/product/" + cartItem.id}
+          className="text-lg font-medium"
+        >
+          {name}
+        </a>
         <p className="py-1">
           {gender} | {color} {size && `| ${size}`}
         </p>

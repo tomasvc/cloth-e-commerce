@@ -12,32 +12,22 @@ const initialState: SliceState = {
 };
 
 const addItemToArray = (array: CartItem[], item: CartItem): CartItem[] => {
-  const itemExists = array.find((existingItem) => existingItem.id === item.id);
-  return itemExists 
-    ? array.map((existingItem) => 
-      existingItem.id === item.id 
-        ? { ...existingItem, quantity: existingItem.quantity + 1 } 
-        : existingItem
-      ) 
-    : [...array, { ...item, quantity: 1 }]
+  const itemExists = array?.find((existingItem) => existingItem.id === item.id);
+  if (!itemExists) {
+    return [...array, { ...item }];
+  } else {
+    return array;
+  }
 }
 
 const removeItemFromArray = (array: CartItem[], item: CartItem): CartItem[] => {
-  const itemExists = array.find((existingItem) => existingItem.id === item.id);
-
+  const itemExists = array?.find((existingItem) => existingItem.id === item.id);
   if (!itemExists) {
     return array;
-  }
-  
-  if (itemExists.quantity === 1) {
-    return array.filter((existingItem) => existingItem.id !== item.id);
+  } else {
+    return array?.filter((existingItem) => existingItem.id !== item.id);
   }
 
-  return array.map((existingItem) => 
-    existingItem.id === item.id
-      ? { ...existingItem, quantity: existingItem.quantity - 1 }
-      : existingItem
-  );
 }
 
 export const addItemToFavoritesThunk = createAsyncThunk(
@@ -77,7 +67,7 @@ export const removeItemFromFavoritesThunk = createAsyncThunk(
 );
 
 
-export const favoriteSlice = createSlice({
+export const favoritesSlice = createSlice({
   name: "favorites",
   initialState,
   reducers: {
@@ -92,7 +82,7 @@ export const favoriteSlice = createSlice({
     updateFavoritesFromFirestore(state, action) {
       state.items = action.payload;
     },
-    resetActionCompletedFlag(state) {
+    resetFavoriteActionCompletedFlag(state) {
       state.actionCompleted = null;
     }
   },
@@ -131,6 +121,6 @@ export const {
   updateFavoritesFromFirestore,
   clearFavorites,
   clearItemFromFavorites,
-  resetActionCompletedFlag
-} = favoriteSlice.actions;
-export default favoriteSlice.reducer;
+  resetFavoriteActionCompletedFlag
+} = favoritesSlice.actions;
+export default favoritesSlice.reducer;
