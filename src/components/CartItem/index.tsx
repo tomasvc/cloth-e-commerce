@@ -25,8 +25,8 @@ export const CartItem: React.FC<CartItemProps> = (cartItem) => {
   const favorites = useSelector((state: RootState) => state.favorites);
   const dispatch = useDispatch();
 
-  const isItemInFavorites = (item: CartItemProps) => {
-    return favorites.items?.find((item: any) => item.id === cartItem?.id);
+  const isItemInFavorites = (favoriteItem: CartItemProps) => {
+    return favorites.items?.find((item: any) => item.id === favoriteItem?.id);
   };
 
   const handleAddToFavorites = (item: CartItemProps) => {
@@ -66,6 +66,7 @@ export const CartItem: React.FC<CartItemProps> = (cartItem) => {
             <button
               className="flex justify-center items-center w-[50px] h-[50px] text-2xl font-thin border border-gray-300 rounded-sm hover:border-gray-500 transition duration-300"
               onClick={() => dispatch(removeItemFromCartThunk(cartItem))}
+              name="Item minus"
             >
               <FiMinus className="w-4 h-4 text-gray-800" />
             </button>
@@ -73,11 +74,16 @@ export const CartItem: React.FC<CartItemProps> = (cartItem) => {
             <button
               className="flex justify-center items-center w-[50px] h-[50px] text-2xl font-thin border border-gray-300 rounded-sm hover:border-gray-500 transition duration-300"
               onClick={() => dispatch(addItemToCartThunk(cartItem))}
+              name="Item plus"
             >
               <FiPlus className="w-4 h-4 text-gray-800" />
             </button>
           </div>
-          <p className="py-4 font-semibold">${(price * quantity).toFixed(2)}</p>
+          {price && quantity && (
+            <span className="py-4 font-semibold">
+              ${(price * quantity).toFixed(2)}
+            </span>
+          )}
         </div>
         <button
           className="text-center uppercase text-gray-800 px-6 py-2 border border-slate-800 rounded hover:sm:bg-slate-100 transition"

@@ -31,28 +31,19 @@ export const CategoriesMenu: React.FC<CategoriesMenuProps> = ({
     }
   };
 
-  const categoryIndexMap: any = {
-    Sale: 0,
-    "SALE: NOW UP TO 80% OFF": 1,
-    "New in": 2,
-    Clothing: 3,
-    Activewear: 4,
-    Shoes: 5,
-    Topman: 6,
-    Sneakers: 7,
-    Fall: 8,
-    Gifting: 9,
-    Tailoring: 10,
-    "Plus & Tall": 11,
-    Accessories: 12,
-    Brands: 13,
-    Outlet: 14,
-  };
+  let mensCategoryIndexMap = new Map();
+  let womensCategoryIndexMap = new Map();
+
+  categoriesMen?.subcategories?.forEach((item: any, index: number) => {
+    mensCategoryIndexMap.set(item.title, index);
+  });
+
+  categoriesWomen?.subcategories?.forEach((item: any, index: number) => {
+    womensCategoryIndexMap.set(item.title, index);
+  });
 
   const renderSelectedComponent = (categories: any) => {
-    const specialComponentsMap: any = {
-      // Put any special components that are not GenericCategory here
-    };
+    const specialComponentsMap: any = {};
 
     const Component = specialComponentsMap[selectedMenu];
 
@@ -60,9 +51,15 @@ export const CategoriesMenu: React.FC<CategoriesMenuProps> = ({
       return <Component categories={categories} onSelect={handleSelect} />;
     }
 
-    const index = categoryIndexMap[selectedMenu];
+    let index = null;
 
-    if (index !== undefined) {
+    if (openMen) {
+      index = mensCategoryIndexMap.get(selectedMenu);
+    } else if (openWomen) {
+      index = womensCategoryIndexMap.get(selectedMenu);
+    }
+
+    if (index !== null && index !== undefined) {
       return (
         <GenericCategory
           categories={categories}
@@ -79,7 +76,7 @@ export const CategoriesMenu: React.FC<CategoriesMenuProps> = ({
     <AnimatePresence>
       {openMen && (
         <motion.div
-          className="fixed bg-[#708B75] top-0 mt-12 md:mt-1 left-0 md:left-auto w-full h-screen md:h-[36rem] overflow-y-auto"
+          className="fixed bg-[#708B75] top-0 mt-12 md:mt-1 left-0 md:left-auto w-full h-screen md:h-[40rem] overflow-y-auto"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 55 }}
           exit={{ opacity: 0, y: 40 }}
@@ -111,7 +108,7 @@ export const CategoriesMenu: React.FC<CategoriesMenuProps> = ({
       )}
       {openWomen && (
         <motion.div
-          className="fixed bg-[#ce6858] top-0 mt-20 md:mt-10 left-0 md:left-auto w-full h-screen md:h-[36rem] overflow-y-auto"
+          className="fixed bg-[#ce6858] top-0 mt-20 md:mt-10 left-0 md:left-auto w-full h-screen md:h-[40rem] overflow-y-auto"
           initial={{ opacity: 0, y: 0 }}
           animate={{ opacity: 1, y: 20 }}
           exit={{ opacity: 0, y: 20 }}

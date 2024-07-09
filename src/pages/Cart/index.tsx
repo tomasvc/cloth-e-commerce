@@ -46,9 +46,9 @@ export const Cart: React.FC = () => {
                     return <CartItem key={id} {...cartItem} />;
                   })}
                 </div>
-                <div className="relative w-full md:w-1/3">
+                <div className="relative w-full md:w-1/2">
                   <div
-                    className="border border-gray-100 bg-white p-8 h-fit lg:fixed"
+                    className="border border-gray-100 bg-white p-8 h-fit w-full lg:sticky lg:top-[80px]"
                     style={{ boxShadow: "2px 4px 15px rgba(0, 0, 0, 0.05)" }}
                   >
                     <h2 className="text-xl">Summary</h2>
@@ -82,7 +82,7 @@ export const Cart: React.FC = () => {
                         Continue shopping
                       </a>
                     </div>
-                    <div className="flex justify-center items-center gap-4 mt-10">
+                    <div className="flex justify-center items-center flex-wrap gap-4 mt-10">
                       <img src={visa} alt="Visa" className="w-auto h-5" />
                       <img
                         src={mastercard}

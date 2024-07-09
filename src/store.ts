@@ -23,15 +23,20 @@ const rootReducer = combineReducers({
     favorites: favoritesReducer
 })
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+export const persistedReducer = persistReducer(persistConfig, rootReducer)
 
-export const store = configureStore({
-    reducer: persistedReducer,
-    middleware: (getDefaultMiddleware: any) => 
+export const setupStore = (preloadedState?: RootState) => {
+    return configureStore({
+      reducer: persistedReducer,
+      preloadedState,
+      middleware: (getDefaultMiddleware: any) => 
         getDefaultMiddleware({
             serializableCheck: false
         })
-})
+    })
+  }
+
+export const store = setupStore() as any;
 
 export const persistor = persistStore(store)
 
