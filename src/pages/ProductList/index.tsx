@@ -79,23 +79,26 @@ export const ProductList: React.FC = () => {
           </h1>
 
           {productList && (
-            <ul className="grid gap-y-4 grid-cols-2 lg:grid-cols-4 justify-center mx-auto">
+            <ul className="grid gap-y-4 grid-cols-2 md:grid-cols-4 justify-center mx-auto">
               {productList?.data?.data?.products?.map(
                 (product: IProduct, id: number) => {
                   return (
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 1 }}
-                    >
-                      <ListItem
+                    <li>
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
                         key={id}
-                        id={product.id}
-                        name={product.name}
-                        price={product.price}
-                        image={product.imageUrl}
-                        isSellingFast={product.isSellingFast}
-                      />
-                    </motion.div>
+                      >
+                        <ListItem
+                          key={id}
+                          id={product.id}
+                          name={product.name}
+                          price={product.price}
+                          image={product.imageUrl}
+                          isSellingFast={product.isSellingFast}
+                        />
+                      </motion.div>
+                    </li>
                   );
                 }
               )}

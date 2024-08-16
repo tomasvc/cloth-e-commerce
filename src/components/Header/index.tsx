@@ -18,9 +18,11 @@ export const Header: React.FC = ({ backgroundColor }: HeaderProps) => {
   const history = useHistory();
 
   const user = useSelector((state: RootState) => state.user);
-  const [openMenMenu, setOpenMenMenu] = useState(false);
-  const [openWomenMenu, setOpenWomenMenu] = useState(false);
-  const [openMobileMenu, setOpenMobileMenu] = useState(false);
+  const [menuState, setMenuState] = useState({
+    mensMenu: false,
+    womensMenu: false,
+    mobileMenu: false,
+  });
 
   return (
     <div
@@ -37,7 +39,12 @@ export const Header: React.FC = ({ backgroundColor }: HeaderProps) => {
           <div className="flex items-center gap-4 w-4/5">
             <FaBars
               className="md:hidden cursor-pointer w-6 h-6 text-white drop-shadow"
-              onClick={() => setOpenMobileMenu(!openMobileMenu)}
+              onClick={() =>
+                setMenuState((prevState) => ({
+                  ...prevState,
+                  mobileMenu: !prevState.mobileMenu,
+                }))
+              }
             />
             <div>
               <Link to="/">
@@ -48,19 +55,39 @@ export const Header: React.FC = ({ backgroundColor }: HeaderProps) => {
             </div>
             <div className="hidden md:flex mx-6 text-white font-medium">
               <button
-                onMouseEnter={() => setOpenWomenMenu(true)}
-                onMouseLeave={() => setOpenWomenMenu(false)}
+                onMouseEnter={() =>
+                  setMenuState((prevState) => ({
+                    ...prevState,
+                    womensMenu: true,
+                  }))
+                }
+                onMouseLeave={() =>
+                  setMenuState((prevState) => ({
+                    ...prevState,
+                    womensMenu: false,
+                  }))
+                }
                 className={`px-6 py-5 tracking-widest text-sm uppercase transition ease-out ${
-                  openWomenMenu && "bg-[#ce6858]"
+                  menuState.womensMenu && "bg-[#ce6858]"
                 }`}
               >
                 Women
               </button>
               <button
-                onMouseEnter={() => setOpenMenMenu(true)}
-                onMouseLeave={() => setOpenMenMenu(false)}
+                onMouseEnter={() =>
+                  setMenuState((prevState) => ({
+                    ...prevState,
+                    mensMenu: true,
+                  }))
+                }
+                onMouseLeave={() =>
+                  setMenuState((prevState) => ({
+                    ...prevState,
+                    mensMenu: false,
+                  }))
+                }
                 className={`px-6 py-5 tracking-widest text-sm uppercase transition ease-out ${
-                  openMenMenu && "bg-[#708B75]"
+                  menuState.mensMenu && "bg-[#708B75]"
                 }`}
               >
                 Men
@@ -84,16 +111,23 @@ export const Header: React.FC = ({ backgroundColor }: HeaderProps) => {
       </div>
       <div
         onMouseEnter={() =>
-          openMenMenu ? setOpenMenMenu(true) : setOpenWomenMenu(true)
+          menuState.mensMenu
+            ? setMenuState((prevState) => ({ ...prevState, mensMenu: true }))
+            : setMenuState((prevState) => ({ ...prevState, womensMenu: true }))
         }
         onMouseLeave={() =>
-          openMenMenu ? setOpenMenMenu(false) : setOpenWomenMenu(false)
+          menuState.mensMenu
+            ? setMenuState((prevState) => ({ ...prevState, mensMenu: false }))
+            : setMenuState((prevState) => ({ ...prevState, womensMenu: true }))
         }
       >
-        <CategoriesMenu openMen={openMenMenu} openWomen={openWomenMenu} />
+        <CategoriesMenu
+          openMen={menuState.mensMenu}
+          openWomen={menuState.womensMenu}
+        />
       </div>
       <AnimatePresence>
-        {openMobileMenu && (
+        {menuState.mobileMenu && (
           <motion.div
             className="w-full absolute left-0 top-0"
             initial={{ opacity: 0, y: 40 }}

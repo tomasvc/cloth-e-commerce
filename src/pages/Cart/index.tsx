@@ -1,4 +1,5 @@
 import { CartItem } from "components/CartItem";
+import { CheckoutButton } from "components/CheckoutButton";
 import { MainLayout } from "components/MainLayout";
 import { RootState } from "store";
 import { Link } from "react-router-dom";
@@ -51,6 +52,13 @@ export const Cart: React.FC = () => {
                     className="border border-gray-100 bg-white p-8 h-fit w-full lg:sticky lg:top-[80px]"
                     style={{ boxShadow: "2px 4px 15px rgba(0, 0, 0, 0.05)" }}
                   >
+                    <p className="flex items-center gap-1 text-white text-sm bg-slate-500 px-3 py-2 mb-2 rounded font-roboto">
+                      <span>
+                        Stripe Test Mode: Payments are simulated. Use card
+                        number <strong>4242 4242 4242 4242</strong> to test
+                        payments.
+                      </span>
+                    </p>
                     <h2 className="text-xl">Summary</h2>
                     <div className="w-full flex gap-4 mt-3 mb-4">
                       <input
@@ -72,9 +80,7 @@ export const Cart: React.FC = () => {
                     </div>
 
                     <div className="flex flex-col mt-4">
-                      <button className="text-sm uppercase bg-gray-800 text-white py-3 rounded mt-2 hover:sm:bg-amber-600 transition ease-out">
-                        Continue to checkout
-                      </button>
+                      <CheckoutButton cart={cart.items} />
                       <a
                         href="/products/27110"
                         className="text-sm text-center uppercase text-gray-800 mt-3 py-2.5 border border-slate-800 rounded hover:sm:bg-slate-100 transition"

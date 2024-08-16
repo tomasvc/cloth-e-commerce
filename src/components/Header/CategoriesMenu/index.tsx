@@ -76,7 +76,7 @@ export const CategoriesMenu: React.FC<CategoriesMenuProps> = ({
     <AnimatePresence>
       {openMen && (
         <motion.div
-          className="fixed bg-[#708B75] top-0 mt-12 md:mt-1 left-0 md:left-auto w-full h-screen md:h-[40rem] overflow-y-auto"
+          className="fixed bg-[#708B75] top-0 mt-12 md:mt-1 left-0 w-full h-screen md:h-[40rem] overflow-y-auto"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 55 }}
           exit={{ opacity: 0, y: 40 }}
@@ -108,7 +108,7 @@ export const CategoriesMenu: React.FC<CategoriesMenuProps> = ({
       )}
       {openWomen && (
         <motion.div
-          className="fixed bg-[#ce6858] top-0 mt-20 md:mt-10 left-0 md:left-auto w-full h-screen md:h-[40rem] overflow-y-auto"
+          className="fixed bg-[#ce6858] top-0 mt-20 md:mt-10 left-0 w-full h-screen md:h-[40rem] overflow-y-auto"
           initial={{ opacity: 0, y: 0 }}
           animate={{ opacity: 1, y: 20 }}
           exit={{ opacity: 0, y: 20 }}

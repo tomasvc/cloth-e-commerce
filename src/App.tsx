@@ -12,6 +12,7 @@ import { Register } from "pages/Register";
 import { ProductList } from "pages/ProductList";
 import { Product } from "pages/Product";
 import { Profile } from "pages/Profile";
+import { SuccessfulPayment } from "pages/SuccessfulPayment";
 
 const pageVariants = {
   initial: {
@@ -74,6 +75,9 @@ const App = () => {
           </AnimatedRoute>
           <AnimatedRoute exact path="/favorites">
             <Favorites />
+          </AnimatedRoute>
+          <AnimatedRoute exact path="/order/success">
+            <SuccessfulPayment />
           </AnimatedRoute>
           <AnimatedRoute exact path="/products/:categoryId">
             <ProductList />

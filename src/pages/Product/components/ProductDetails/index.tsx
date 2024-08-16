@@ -47,7 +47,9 @@ export const ProductDetails = ({
       <p className="uppercase text-sm tracking-widest font-light">
         {product?.pdpLayout + " — " + product?.productType?.name}
       </p>
-      <h3 className="text-3xl font-light pt-1 pb-6">{product?.name}</h3>
+      <h3 className="text-3xl font-light pt-1 pb-4" id="product-name">
+        {product?.name}
+      </h3>
       <div className="flex items-end gap-2">
         <p className="text-xl font-medium">{productPrice}</p>
         {/* {product?.price?.previous?.text! !== product?.price?.current?.text && (
@@ -75,14 +77,28 @@ export const ProductDetails = ({
           </p>
         </div>
       )}
-      <p className="font-roboto uppercase tracking-widest text-sm pb-1 pt-6">
+      <div className="flex gap-6 mt-6">
+        <div>
+          <p className="text-xl">{product?.gender}</p>
+          <p className="font-roboto uppercase text-xs font-bold tracking-wide">
+            Gender
+          </p>
+        </div>
+        <div>
+          <p className="text-xl">{color}</p>
+          <p className="font-roboto uppercase text-xs font-bold tracking-wide">
+            Color
+          </p>
+        </div>
+      </div>
+      {/* <p className="font-roboto uppercase tracking-widest text-sm pb-1 pt-6">
         Gender: {product?.gender}
-      </p>
-      <p className="font-roboto uppercase tracking-widest text-sm">
+      </p> */}
+      {/* <p className="font-roboto uppercase tracking-widest text-sm">
         Color: {color}
-      </p>
+      </p> */}
       <div
-        className="mt-4 mb-6 font-roboto font-light"
+        className="my-6 font-roboto font-light text-sm"
         dangerouslySetInnerHTML={{
           __html: product?.description || "",
         }}
