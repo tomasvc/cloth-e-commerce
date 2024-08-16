@@ -8,7 +8,7 @@ import { RootState } from "store";
 const API_URL =
   process.env.NODE_ENV === "production"
     ? process.env.REACT_APP_BACKEND_URL
-    : process.env.REACT_APP_BACKEND_URL;
+    : "http://localhost:4242";
 
 export const SuccessfulPayment = () => {
   const searchParams = useLocation().search;
