@@ -140,16 +140,6 @@ const updateUserFavorites = async (userAuth: User, items: any) => {
   })
 }
 
-const updateUserOrders = async (userAuth: User, items: any) => {
-  const userDocRef = doc(db, "users", userAuth.uid);
-
-  await updateDoc(userDocRef, {
-    orders: items
-  }).catch(error => {
-    console.error(error)
-  })
-}
-
 export {
   app,
   auth,

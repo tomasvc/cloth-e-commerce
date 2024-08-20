@@ -58,7 +58,7 @@ export const SuccessfulPayment = () => {
       <div className="flex flex-col justify-center items-center min-h-screen max-w-7xl mx-auto px-4 md:px-8 pb-10 mt-16 bg-gray-50 font-['Oswald']">
         <div className="justify-self-center -mt-12">
           <h2 className="text-4xl mb-4">Payment Successful!</h2>
-          <div className="font-roboto text-lg flex flex-col gap-4">
+          <div className="font-roboto text-sm lg:text-lg flex flex-col gap-4">
             <p>
               Thanks for your order, {user?.user?.displayName}. Your payment of
               ${session.session.amount_total / 100} has been processed.

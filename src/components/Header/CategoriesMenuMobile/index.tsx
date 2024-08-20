@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { SearchMobile } from "../SearchMobile";
 
 export const CategoriesMenuMobile: React.FC<{
   CategoriesMenu: React.ComponentType<{ openMen: boolean; openWomen: boolean }>;
@@ -41,6 +42,7 @@ export const CategoriesMenuMobile: React.FC<{
           Women
         </button>
         <CategoriesMenu openMen={openMen} openWomen={openWomen} />
+        <SearchMobile />
       </div>
     </div>
   );

@@ -11510,6 +11510,11 @@
     "querystringify" "^2.1.1"
     "requires-port" "^1.0.0"
 
+"use-debounce@^10.0.3":
+  "integrity" "sha512-DxQSI9ZKso689WM1mjgGU3ozcxU1TJElBJ3X6S4SMzMNcm2lVH0AHmyXB+K7ewjz2BSUKJTDqTcwtSMRfB89dg=="
+  "resolved" "https://registry.npmjs.org/use-debounce/-/use-debounce-10.0.3.tgz"
+  "version" "10.0.3"
+
 "util-deprecate@^1.0.1", "util-deprecate@^1.0.2", "util-deprecate@~1.0.1":
   "integrity" "sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw=="
   "resolved" "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz"

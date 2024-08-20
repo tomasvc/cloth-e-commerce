@@ -6,8 +6,6 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_KEY = "78a110ed1dmshbcfebcdca14633ap13f5ffjsn7c75c6dcf1c0";
-
 type Props = {
   page?: number | undefined;
   category?: string | undefined;
@@ -39,7 +37,7 @@ export const fetchProducts = createAsyncThunk(
         },
         headers: {
           "x-rapidapi-host": "asos10.p.rapidapi.com",
-          "x-rapidapi-key": API_KEY,
+          "x-rapidapi-key": process.env.REACT_APP_RAPIDAPI_KEY,
         },
       })
       .then((response) => response.data.products);
@@ -64,7 +62,7 @@ export const fetchProductsByCategoryId = createAsyncThunk(
         },
         headers: {
           "x-rapidapi-host": "asos10.p.rapidapi.com",
-          "x-rapidapi-key": API_KEY,
+          "x-rapidapi-key": process.env.REACT_APP_RAPIDAPI_KEY,
         },
       })
       .then((response) => {
@@ -89,7 +87,7 @@ export const fetchProductItemById = createAsyncThunk(
         },
         headers: {
           "x-rapidapi-host": "asos2.p.rapidapi.com",
-          "x-rapidapi-key": API_KEY,
+          "x-rapidapi-key": process.env.REACT_APP_RAPIDAPI_KEY,
         },
       })
       .then((response) => response.data.products)

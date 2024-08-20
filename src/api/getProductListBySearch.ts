@@ -20,7 +20,7 @@ export const getProductListBySearch = ({ page, categoryId }: Props): Promise<any
             lang: "en-US",
           },
         headers: {
-          'X-RapidAPI-Key': '78a110ed1dmshbcfebcdca14633ap13f5ffjsn7c75c6dcf1c0',
+          'X-RapidAPI-Key': process.env.REACT_APP_RAPIDAPI_KEY,
           'X-RapidAPI-Host': 'asos10.p.rapidapi.com'
         }
       }).then(response => {

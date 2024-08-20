@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_KEY = "78a110ed1dmshbcfebcdca14633ap13f5ffjsn7c75c6dcf1c0";
-
 export const fetchResults = createAsyncThunk(
   "products/searchProducts",
   (query) => {
@@ -20,7 +18,7 @@ export const fetchResults = createAsyncThunk(
         },
         headers: {
           "x-rapidapi-host": "asos2.p.rapidapi.com",
-          "x-rapidapi-key": API_KEY,
+          "x-rapidapi-key": process.env.REACT_APP_RAPIDAPI_KEY,
         },
       })
       .then((response) => response.data);

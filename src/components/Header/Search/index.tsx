@@ -1,102 +1,71 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { RootState } from "store";
-import { updateResults, clearResults } from "slices/searchSlice";
-// import { Searchbar } from "./styles";
-import axios, { AxiosRequestConfig } from "axios";
-
-const API_KEY = "78a110ed1dmshbcfebcdca14633ap13f5ffjsn7c75c6dcf1c0";
+import { useSearchResults } from "api/getSearchResults";
+import { useDebounce } from "use-debounce";
+import { CircularProgress } from "@mui/material";
 
 export const Search: React.FC = () => {
   const [query, setQuery] = useState("");
-  const results = useSelector((state: RootState) => state.search);
-  const dispatch = useDispatch();
-
-  const options: AxiosRequestConfig = {
-    method: "GET",
-    url: "https://asos2.p.rapidapi.com/products/v2/list",
-    params: {
-      store: "US",
-      offset: "0",
-      categoryId: "4209",
-      limit: "10",
-      country: "UK",
-      range: "new_season",
-      sort: "freshness",
-      currency: "USD",
-      sizeSchema: "US",
-      lang: "en-US",
-      q: query,
-    },
-    headers: {
-      "x-rapidapi-host": "asos2.p.rapidapi.com",
-      "x-rapidapi-key": API_KEY,
-    },
-  };
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setQuery(event.target.value);
-  };
-
-  const getResults = (options: AxiosRequestConfig) => {
-    query !== ""
-      ? axios
-          .request(options)
-          .then((response) => {
-            dispatch(updateResults(response.data.products));
-          })
-          .catch((error) => {
-            console.log(error);
-          })
-      : dispatch(clearResults());
-  };
-
-  const handleClearInputAndResults = () => {
-    setQuery("");
-    dispatch(clearResults());
-  };
-
-  useEffect(() => {
-    getResults(options);
-  }, [query]);
-
-  useEffect(() => {
-    // showResults(results);
-  }, [results]);
+  const [debouncedValue] = useDebounce(query, 500);
+  const {
+    data: results,
+    isLoading,
+    error,
+  } = useSearchResults({ query: debouncedValue });
 
   return (
-    <div className="w-1/2">
+    <div className="relative w-full hidden md:block">
       <form autoComplete="off">
         <input
-          onChange={handleChange}
-          className="bg-white/30 text-white placeholder-white px-4 py-2 w-full"
+          onChange={(e) => setQuery(e.target.value)}
+          className="bg-white/20 text-white placeholder-white text-sm px-4 py-2 block w-full"
           type="text"
           placeholder="Search for items and brands"
         />
         <div
           id="results"
-          style={{ visibility: query ? "visible" : "hidden" }}
-          className="hidden"
+          className={`${
+            query?.length === 0 ? "hidden" : ""
+          } absolute bg-[#4b5462] text-white font-roboto text-sm p-2 pt-4 rounded-br rounded-bl w-[100%]`}
         >
-          <ul>
-            {results?.loading && <li>Loading...</li>}
-            {results?.results?.length ? (
-              results.results.map((item: any, id: number) => {
-                return (
-                  <li>
-                    <Link
-                      key={id}
-                      to={`/product/${item?.id}`}
-                      onClick={handleClearInputAndResults}
-                    >
-                      {item?.name}
-                    </Link>
-                  </li>
-                );
-              })
-            ) : (
-              <li>No items found with the name '{query}'</li>
+          {isLoading && (
+            <div className="flex flex-center items-center w-full py-4">
+              <CircularProgress className="mx-auto" />
+            </div>
+          )}
+          {error && <p className="text-white">An error occurred</p>}
+          <ul className="flex flex-col gap-1 w-full">
+            {!isLoading && results?.products.length
+              ? results.products.map((item: any, id: number) => {
+                  return (
+                    <li className="w-full" key={id}>
+                      <Link
+                        key={id}
+                        to={`/product/${item?.id}`}
+                        onClick={() => setQuery("")}
+                        className="hover:bg-slate-700 px-3 py-2.5 rounded-lg block w-full"
+                      >
+                        <div className="flex items-center gap-3">
+                          <img
+                            src={"https://" + item?.imageUrl}
+                            alt={item?.name}
+                            width={20}
+                            height="auto"
+                            className="rounded"
+                          />
+                          <span className="truncate">{item?.name}</span>
+                        </div>
+                      </Link>
+                    </li>
+                  );
+                })
+              : null}
+            {!isLoading && results?.products.length === 0 && (
+              <li className="w-full">
+                <p className="text-white">
+                  No results found with query '{query}'
+                </p>
+              </li>
             )}
           </ul>
         </div>

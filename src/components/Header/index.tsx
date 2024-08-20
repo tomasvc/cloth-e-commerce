@@ -7,6 +7,7 @@ import { RootState } from "../../store";
 import { CategoriesMenu } from "./CategoriesMenu";
 import { FaBars } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
+import { Search } from "./Search";
 
 import { CategoriesMenuMobile } from "./CategoriesMenuMobile";
 
@@ -32,7 +33,7 @@ export const Header: React.FC = ({ backgroundColor }: HeaderProps) => {
     >
       <div className="max-w-7xl w-full px-4 md:px-8 mx-auto flex justify-between">
         <nav
-          className="w-full flex justify-between"
+          className="w-full flex justify-between items-center"
           role="navigation"
           aria-label="main navigation"
         >
@@ -86,14 +87,16 @@ export const Header: React.FC = ({ backgroundColor }: HeaderProps) => {
                     mensMenu: false,
                   }))
                 }
-                className={`px-6 py-5 tracking-widest text-sm uppercase transition ease-out ${
+                className={`px-8 py-5 tracking-widest text-sm uppercase transition ease-out ${
                   menuState.mensMenu && "bg-[#708B75]"
                 }`}
               >
                 Men
               </button>
             </div>
+            <Search />
           </div>
+
           <div className="flex items-center gap-8 text-white drop-shadow-sm">
             <button className="flex" onClick={() => history.push("/cart")}>
               <BsCart2 className="w-5 h-5" />

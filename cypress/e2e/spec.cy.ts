@@ -13,17 +13,6 @@ describe('template spec', () => {
     cy.get('h1').should('contain', 'New in');
   })
 
-  // it('should render all available menu options', () => {
-  //   cy.request('https://asos10.p.rapidapi.com/api/v1/getCategories?country=US&lang=en-US', {
-  //     headers: {
-  //       'X-RapidAPI-Key': '78a110ed1dmshbcfebcdca14633ap13f5ffjsn7c75c6dcf1c0',
-  //       'X-RapidAPI-Host': 'asos10.p.rapidapi.com'
-  //     }
-  //   }).then((response) => {
-  //     console.log(response)
-  //   })
-  // })
-
   it('should navigate to a product by pressing on it in the products list', () => {
     cy.visit('http://localhost:3000/products/27110');
     cy.get('h1').should('contain', 'New in');
