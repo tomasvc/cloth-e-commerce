@@ -94,8 +94,6 @@ const getUserCartFromFirestore = async (userAuth: User): Promise<void | Array<an
 
   const docSnap = await getDoc(userDocRef)
 
-  console.log(docSnap?.data())
-
   return docSnap?.data()?.cart as Array<any>
 
 }

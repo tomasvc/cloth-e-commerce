@@ -14,7 +14,6 @@ const API_URL =
     : `http://localhost:4242`;
 
 export const CheckoutButton = ({ cart }: CheckoutButtonProps) => {
-  console.log(cart);
   const handleClick = async (event: { preventDefault: () => void }) => {
     const stripe = await stripePromise;
 
@@ -22,7 +21,7 @@ export const CheckoutButton = ({ cart }: CheckoutButtonProps) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: window.location.origin,
+        Origin: window.location.origin + "/",
       },
       credentials: "include",
       body: JSON.stringify({
