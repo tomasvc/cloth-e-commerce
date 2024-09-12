@@ -2,18 +2,22 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Spinner } from "components/Icons";
 import image from "assets/images/google-icon.png";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
+const loginSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
+});
+
+type LoginFormInputs = z.infer<typeof loginSchema>;
 
 interface LoginFormProps {
   onSubmit: (email: string, password: string) => void;
   onGoogleSignIn: () => void;
   error: any;
   isLoading: boolean;
-}
-
-interface IFormInputs {
-  email: string;
-  password: string;
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({
@@ -26,11 +30,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<IFormInputs>();
+  } = useForm<LoginFormInputs>({
+    resolver: zodResolver(loginSchema),
+  });
 
-  const onSubmitForm: SubmitHandler<IFormInputs> = (data: any, e: any) => {
-    e.preventDefault();
-    onSubmit(data?.email, data?.password);
+  const onSubmitForm = (data: LoginFormInputs) => {
+    onSubmit(data.email, data.password);
   };
 
   return (
@@ -49,17 +54,15 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           </label>
           <input
             type="email"
+            id="email"
             className="px-3 py-2 border border-gray-500 bg-white rounded-sm"
             placeholder="Email"
             required
-            {...register("email", { required: true })}
+            {...register("email")}
             aria-invalid={errors.email ? "true" : "false"}
           />
           {errors.email && (
-            <p className="text-sm text-red-700 pt-1">{errors.email?.message}</p>
-          )}
-          {error === "The user with that email was not found" && (
-            <p className="text-sm text-red-700 pt-1">{error}</p>
+            <p className="text-sm text-red-700 pt-1">{errors.email.message}</p>
           )}
         </div>
         <div className="flex flex-col">
@@ -71,22 +74,25 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           </label>
           <input
             type="password"
+            id="password"
             className="px-3 py-2 border border-gray-500 bg-white rounded-sm"
             placeholder="Password"
             required
-            {...register("password", { required: true })}
+            {...register("password")}
             aria-invalid={errors.password ? "true" : "false"}
           />
-          {errors.password?.type === "required" && (
-            <p className="text-sm text-red-700 pt-1">Password is required</p>
-          )}
-          {error === "Wrong password" && (
-            <p className="text-sm text-red-700 pt-1">{error}</p>
+          {errors.password && (
+            <p className="text-sm text-red-700 pt-1">
+              {errors.password.message}
+            </p>
           )}
         </div>
+        {error && <p className="text-sm text-red-700 mb-4 pt-1">{error}</p>}
         <button
           type="submit"
           className="flex justify-center items-center bg-gray-800 text-white py-2 rounded mt-6 hover:sm:bg-slate-600 transition"
+          disabled={isLoading}
+          data-testid="login-button"
         >
           {isLoading ? <Spinner /> : "Login"}
         </button>

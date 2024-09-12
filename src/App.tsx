@@ -1,4 +1,4 @@
-import { Route, Switch, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { AppProvider } from "providers/app";
 import { Home } from "pages/Home";
@@ -26,25 +26,17 @@ const pageVariants = {
   },
 };
 
-const AnimatedRoute = ({ children, ...props }: any) => {
-  return (
-    <Route {...props}>
-      {({ match }) =>
-        match && (
-          <motion.div
-            initial="initial"
-            animate="in"
-            exit="out"
-            variants={pageVariants}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-          >
-            {children}
-          </motion.div>
-        )
-      }
-    </Route>
-  );
-};
+const AnimatedWrapper = ({ children }: { children: React.ReactNode }) => (
+  <motion.div
+    initial="initial"
+    animate="in"
+    exit="out"
+    variants={pageVariants}
+    transition={{ duration: 0.5, ease: "easeOut" }}
+  >
+    {children}
+  </motion.div>
+);
 
 const App = () => {
   const location = useLocation();
@@ -54,38 +46,88 @@ const App = () => {
       <div className="min-h-screen flex flex-col">
         <Header key="header" />
 
-        <Switch location={location} key={location.pathname}>
-          <AnimatedRoute exact path="/">
-            <Home />
-          </AnimatedRoute>
-          <AnimatedRoute exact path="/login">
-            <Login />
-          </AnimatedRoute>
-          <AnimatedRoute exact path="/register">
-            <Register />
-          </AnimatedRoute>
-          <AnimatedRoute exact path="/profile">
-            <Profile />
-          </AnimatedRoute>
-          <AnimatedRoute exact path="/cart">
-            <Cart />
-          </AnimatedRoute>
-          <AnimatedRoute exact path="/checkout">
-            <Checkout />
-          </AnimatedRoute>
-          <AnimatedRoute exact path="/favorites">
-            <Favorites />
-          </AnimatedRoute>
-          <AnimatedRoute exact path="/order/success">
-            <SuccessfulPayment />
-          </AnimatedRoute>
-          <AnimatedRoute exact path="/products/:categoryId">
-            <ProductList />
-          </AnimatedRoute>
-          <AnimatedRoute exact path="/product/:productId">
-            <Product />
-          </AnimatedRoute>
-        </Switch>
+        <Routes location={location} key={location.pathname}>
+          <Route
+            path="/"
+            element={
+              <AnimatedWrapper>
+                <Home />
+              </AnimatedWrapper>
+            }
+          ></Route>
+          <Route
+            path="/login"
+            element={
+              <AnimatedWrapper>
+                <Login />
+              </AnimatedWrapper>
+            }
+          ></Route>
+          <Route
+            path="/register"
+            element={
+              <AnimatedWrapper>
+                <Register />
+              </AnimatedWrapper>
+            }
+          ></Route>
+          <Route
+            path="/profile"
+            element={
+              <AnimatedWrapper>
+                <Profile />
+              </AnimatedWrapper>
+            }
+          ></Route>
+          <Route
+            path="/cart"
+            element={
+              <AnimatedWrapper>
+                <Cart />
+              </AnimatedWrapper>
+            }
+          ></Route>
+          <Route
+            path="/checkout"
+            element={
+              <AnimatedWrapper>
+                <Checkout />
+              </AnimatedWrapper>
+            }
+          ></Route>
+          <Route
+            path="/favorites"
+            element={
+              <AnimatedWrapper>
+                <Favorites />
+              </AnimatedWrapper>
+            }
+          ></Route>
+          <Route
+            path="/order/success"
+            element={
+              <AnimatedWrapper>
+                <SuccessfulPayment />
+              </AnimatedWrapper>
+            }
+          ></Route>
+          <Route
+            path="/products/:categoryId"
+            element={
+              <AnimatedWrapper>
+                <ProductList />
+              </AnimatedWrapper>
+            }
+          ></Route>
+          <Route
+            path="/product/:productId"
+            element={
+              <AnimatedWrapper>
+                <Product />
+              </AnimatedWrapper>
+            }
+          ></Route>
+        </Routes>
 
         <div className="mt-auto">
           <Footer />

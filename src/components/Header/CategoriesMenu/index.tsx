@@ -76,10 +76,10 @@ export const CategoriesMenu: React.FC<CategoriesMenuProps> = ({
     <AnimatePresence>
       {openMen && (
         <motion.div
-          className="fixed bg-[#708B75] top-0 mt-12 md:mt-1 left-0 w-full h-screen md:h-[40rem] overflow-y-auto z-10"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 55 }}
-          exit={{ opacity: 0, y: 40 }}
+          className="fixed bg-[#708B75] top-0 mt-20 md:mt-10 left-0 w-full h-screen md:h-[40rem] overflow-y-auto z-10"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
           transition={{ ease: "anticipate", duration: 0.4 }}
         >
           <div className="w-full py-6 flex flex-col md:flex-row gap-6">
@@ -109,9 +109,9 @@ export const CategoriesMenu: React.FC<CategoriesMenuProps> = ({
       {openWomen && (
         <motion.div
           className="fixed bg-[#ce6858] top-0 mt-20 md:mt-10 left-0 w-full h-screen md:h-[40rem] overflow-y-auto z-10"
-          initial={{ opacity: 0, y: 0 }}
-          animate={{ opacity: 1, y: 20 }}
-          exit={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
           transition={{ ease: "anticipate", duration: 0.4 }}
         >
           <div className="w-full py-6 flex flex-col md:flex-row gap-6">

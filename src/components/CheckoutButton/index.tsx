@@ -11,9 +11,10 @@ type CheckoutButtonProps = {
 const API_URL =
   process.env.NODE_ENV === "production"
     ? process.env.REACT_APP_BACKEND_URL
-    : process.env.REACT_APP_BACKEND_URL;
+    : `http://localhost:4242`;
 
 export const CheckoutButton = ({ cart }: CheckoutButtonProps) => {
+  console.log(cart);
   const handleClick = async (event: { preventDefault: () => void }) => {
     const stripe = await stripePromise;
 

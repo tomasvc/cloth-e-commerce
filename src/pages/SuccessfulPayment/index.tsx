@@ -60,16 +60,18 @@ export const SuccessfulPayment = () => {
           <h2 className="text-4xl mb-4">Payment Successful!</h2>
           <div className="font-roboto text-sm lg:text-lg flex flex-col gap-4">
             <p>
-              Thanks for your order, {user?.user?.displayName}. Your payment of
-              ${session.session.amount_total / 100} has been processed.
+              Thanks for your order
+              {user?.user?.displayName ? ", " + user?.user?.displayName : ""}.
+              Your payment of ${session.session.amount_total.toFixed(2)} has
+              been processed.
             </p>
             <p className="leading-8">
               Your order number is{" "}
-              <strong className="font-bold bg-slate-200 px-2 py-1 rounded break-all">
+              <strong className="font-semibold bg-slate-200 px-2 py-1 rounded break-all">
                 {session.session.id}
               </strong>
               . A confirmation email has been sent to{" "}
-              <strong className="font-bold bg-slate-200 px-2 py-1 rounded">
+              <strong className="font-semibold bg-slate-200 px-2 py-1 rounded">
                 {session.session.customer_details.email}
               </strong>
             </p>

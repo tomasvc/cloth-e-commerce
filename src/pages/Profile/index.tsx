@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RootState } from "store";
 import { signOutUser } from "utils/firebase";
 import { userLogout } from "slices/userSlice";
@@ -10,14 +10,14 @@ import image from "assets/images/profile-bg.jpg";
 export const Profile: React.FC = () => {
   const user = useSelector((state: RootState) => state.user);
 
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleSignOut = () => {
     signOutUser().then(() => {
       dispatch(userLogout());
       dispatch(clearCart());
-      history.push("/login");
+      navigate("/login");
     });
   };
 

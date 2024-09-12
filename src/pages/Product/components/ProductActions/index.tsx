@@ -2,7 +2,7 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { Product } from "../../types";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { RootState } from "store";
 import { Alert, Snackbar } from "@mui/material";
 import { resetFavoriteActionCompletedFlag } from "slices/favoriteSlice";
@@ -22,20 +22,15 @@ export const ProductActions = ({
   handleRemoveFromFavorites,
 }: Props) => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user);
   const favorites = useSelector((state: RootState) => state.favorites);
-  const cart = useSelector((state: RootState) => state.cart);
+  const cartActionCompleted = useSelector(
+    (state: RootState) => state.cart.actionCompleted
+  );
 
-  const isItemInFavorites = () => {
-    const item = favorites.items?.find((item: any) => item.id === product?.id);
-
-    if (item) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+  const isItemInFavorites = () =>
+    favorites.items?.some((item: any) => item.id === product?.id) ?? false;
 
   const [isFavorite, setIsFavorite] = useState(isItemInFavorites());
   const [cartSnackbar, setCartSnackbar] = useState(false);
@@ -45,13 +40,12 @@ export const ProductActions = ({
     if (user.user) {
       if (isItemInFavorites()) {
         handleRemoveFromFavorites(product);
-        setIsFavorite(false);
       } else {
         handleAddToFavorites(product);
-        setIsFavorite(true);
       }
+      setIsFavorite(true);
     } else {
-      history.push("/login");
+      navigate("/login");
     }
   };
 
@@ -63,11 +57,11 @@ export const ProductActions = ({
   }, [favorites.actionCompleted, dispatch]);
 
   useEffect(() => {
-    if (cart.actionCompleted) {
+    if (cartActionCompleted) {
       setCartSnackbar(true);
       dispatch(resetCartActionCompletedFlag());
     }
-  }, [cart.actionCompleted, dispatch]);
+  }, [cartActionCompleted, dispatch]);
 
   return (
     <>
@@ -76,7 +70,7 @@ export const ProductActions = ({
           className="text-sm uppercase bg-gray-800 text-white px-6 py-3 rounded hover:sm:bg-amber-600 transition ease-out"
           title="Add to cart"
           onClick={() =>
-            user.user ? handleAddToCart(product) : history.push("/login")
+            user.user ? handleAddToCart(product) : navigate("/login")
           }
         >
           Add to cart

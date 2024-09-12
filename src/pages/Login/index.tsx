@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { userLogin, userError } from "slices/userSlice";
 import { updateCartFromFirestore } from "slices/cartSlice";
 import { updateFavoritesFromFirestore } from "slices/favoriteSlice";
@@ -16,7 +16,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 
 export const Login: React.FC = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -41,7 +41,7 @@ export const Login: React.FC = () => {
         dispatch(updateFavoritesFromFirestore(favorites));
         dispatch(updateCartFromFirestore(cart));
         setIsLoading(false);
-        history.push("/profile");
+        navigate("/profile");
       })
       .catch((error) => {
         if (error.code === "auth/wrong-password") {
@@ -72,7 +72,7 @@ export const Login: React.FC = () => {
         const favorites = await getUserFavoritesFromFirestore(data.user);
         dispatch(updateCartFromFirestore(cart));
         dispatch(updateFavoritesFromFirestore(favorites));
-        history.push("/profile");
+        navigate("/profile");
       })
       .catch((error) => {
         console.log(error.message);

@@ -1,18 +1,14 @@
 import { Product } from "../../types";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 type Props = {
   product: Product;
 };
 
 export const ProductGallery = ({ product }: Props) => {
-  const [image, setImage] = useState<string>("");
-
-  useEffect(() => {
-    if (product?.media?.images) {
-      setImage(product.media.images[0]?.url || "");
-    }
-  }, [product]);
+  const [image, setImage] = useState<string>(
+    product.media?.images?.[0]?.url || ""
+  );
 
   return (
     <div className="flex flex-col-reverse lg:flex-row gap-2 w-full sm:w-1/2 mx-auto h-auto">

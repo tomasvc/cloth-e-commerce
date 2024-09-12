@@ -1,6 +1,4 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { resetProduct } from "slices/productSlice";
 
 type ItemProps = {
   id: number;
@@ -17,13 +15,12 @@ type ItemProps = {
     };
   };
   isSellingFast: boolean;
+  onItemClick: () => void;
 };
 
-export const ListItem: React.FC<ItemProps> = (props: ItemProps) => {
-  const dispatch = useDispatch();
-
+export const ListItem: React.FC<ItemProps> = React.memo((props: ItemProps) => {
   return (
-    <a onClick={() => dispatch(resetProduct())} href={"/product/" + props.id}>
+    <a onClick={props.onItemClick} href={"/product/" + props.id}>
       <div className="flex flex-col text-gray-800 h-full p-2.5 sm:hover:shadow-lg sm:hover:cursor-pointer sm:hover:scale-105 transition-all ease-out">
         <img src={"https://" + props.image} alt={props.name} />
         <div className="h-full flex flex-col justify-between gap-2 pt-1.5">
@@ -45,4 +42,4 @@ export const ListItem: React.FC<ItemProps> = (props: ItemProps) => {
       </div>
     </a>
   );
-};
+});

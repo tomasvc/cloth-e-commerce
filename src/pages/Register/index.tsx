@@ -5,7 +5,7 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { useDispatch } from "react-redux";
-import { useHistory, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { createUserDocumentFromAuth } from "utils/firebase";
 import { userLogin } from "slices/userSlice";
 import { Spinner } from "components/Icons";
@@ -30,7 +30,7 @@ export const Register: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const auth = getAuth();
-  const history = useHistory();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [submitError, setSubmitError] = useState<string | null>(null);
 
@@ -43,7 +43,7 @@ export const Register: React.FC = () => {
         await updateProfile(auth.currentUser, { displayName: data?.name });
         dispatch(userLogin(auth.currentUser));
         setIsLoading(false);
-        history.push("/login");
+        navigate("/login");
       }
     } catch (error: any) {
       console.log(error);
