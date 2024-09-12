@@ -21,9 +21,7 @@ export const CheckoutButton = ({ cart }: CheckoutButtonProps) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Origin: window.location.origin + "/",
       },
-      credentials: "include",
       body: JSON.stringify({
         cartItems: cart,
       }),
